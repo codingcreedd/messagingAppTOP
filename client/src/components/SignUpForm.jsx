@@ -1,19 +1,27 @@
 import React, { useContext, useState } from 'react'
 import { Context } from './ContextProvider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import user_api from '../apis/user'
 
 const SignUpForm = () => {
 
-    const [fullName, setFullName] = useState('');
+    const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {signUp} = useContext(Context);
+    const {setSignUp} = useContext(Context);
+    const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            
+            await user_api.post('/signup', {
+                pw: password,
+                displayName: displayName,
+                email: email
+            }).then(response => {
+                navigate('/logs/login');
+            })
         } catch(err) {
             console.log(err);
         }
@@ -26,15 +34,15 @@ const SignUpForm = () => {
             <form className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300">
-                  Full Name
+                  Display Name
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   required
-                  value={fullName}
-                  onChange={(e) => {setFullName(e.target.value)}}
+                  value={displayName}
+                  onChange={(e) => {setDisplayName(e.target.value)}}
                   className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="John Doe"
                 />
@@ -81,7 +89,7 @@ const SignUpForm = () => {
             </form>
             <p className="mt-4 text-center text-sm text-gray-400">
               Already have an account?{' '}
-              <Link to="/login" className="font-medium text-blue-400 hover:text-blue-300" onClick={() => {signUp(false)}}>
+              <Link to="/logs/login" className="font-medium text-blue-400 hover:text-blue-300" onClick={() => {setSignUp(false)}}>
                 Log in
               </Link>
             </p>

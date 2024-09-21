@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const {PrismaClient} = require('@prisma/client');
+const passport = require('passport');
 const prisma = new PrismaClient();
 const genPassword = require('../lib/passwordUtils').genPassword;
 
-router.post('signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
     try {
 
-        const {pw, fullName, email} = req.body;
+        const {pw, displayName, email} = req.body;
 
         const createPass = genPassword(pw);
         const salt = createPass.salt;
@@ -14,7 +15,7 @@ router.post('signup', async (req, res) => {
 
         const user = await prisma.user.create({
             data: {
-                fullName,
+                displayName,
                 email,
                 hashpassword,
                 salt
@@ -39,6 +40,24 @@ router.post('signup', async (req, res) => {
             message: 'Error creating user'
         })
     }
-})
+});
+
+router.post('/login', passport.authenticate('local'), (req, res) => {
+    console.log('Session --- ', req.session);
+    delete req.user.hashpassword;
+    delete req.user.salt;
+    console.log('USER: ', req.user);
+
+    if(!req.session.passport || !req.session.passport.user) {
+        return res.status(401).json({
+            message: 'Login failed'
+        })
+    } else {
+        console.log(req.session.passport)
+        return res.status(200).json({
+            message: 'Login successful'
+        })
+    }
+});
 
 module.exports = router;

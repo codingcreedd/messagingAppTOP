@@ -1,19 +1,40 @@
 import React, { useContext, useState } from 'react'
-import { Context } from './ContextProvider';
-import {Link} from 'react-router-dom'
+import { Context } from './ContextProvider'
+import {Link, useNavigate} from 'react-router-dom'
+import user_api from '../apis/user'
 
 const LogInForm = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {signUp} = useContext(Context);
+    const {setSignUp, setAuthState} = useContext(Context);
+
+    const navigate = useNavigate();
+
+    const logIn = async (e) => {
+        e.preventDefault();
+        try {
+            await user_api.post('/login', {
+                email,
+                pw: password
+            }).then(response => {
+                console.log(response)
+                if(response.data.message === 'Login successful'){
+                    setAuthState(true);
+                    navigate('/');
+                }
+            })
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-950">
           <div className="bg-gray-900 p-8 rounded-lg shadow-xl w-full max-w-md">
             <h2 className="text-3xl font-bold mb-6 text-center text-gray-100">Log In</h2>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={logIn}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-300">
                   Email Address
@@ -23,6 +44,8 @@ const LogInForm = () => {
                   id="email"
                   name="email"
                   required
+                  value={email}
+                  onChange={(e) => {setEmail(e.target.value)}}
                   className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="john@example.com"
                 />
@@ -34,8 +57,10 @@ const LogInForm = () => {
                 <input
                   type="password"
                   id="password"
-                  name="password"
+                  name="pw"
                   required
+                  value={password}
+                  onChange={(e) => {setPassword(e.target.value)}}
                   className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="••••••••"
                 />
@@ -69,7 +94,7 @@ const LogInForm = () => {
             </form>
             <p className="mt-4 text-center text-sm text-gray-400">
               Don't have an account?{' '}
-              <Link to="/signup" className="font-medium text-blue-400 hover:text-blue-300" onClick={() => {signUp(true)}}>
+              <Link to="/logs/signup" className="font-medium text-blue-400 hover:text-blue-300" onClick={() => {setSignUp(true)}}>
                 Sign up
               </Link>
             </p>
