@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react'
 import Logs from './routes/Logs';
 import { Context } from './components/ContextProvider';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import Nav from './components/Nav';
 
 function App() {
 
@@ -14,8 +15,9 @@ function App() {
   }
 
   return (
-    <div>
-    
+    <div className='flex'>
+      <Nav />
+      <Outlet />
     </div>
   )
 }
