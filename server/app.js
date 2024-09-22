@@ -44,9 +44,10 @@ app.use(passport.session());
 
 //Routes
 const user = require('./routes/user');
+const messages = require('./routes/messages');
 
 app.use('/user', user);
-
+app.use('/messages', messages);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

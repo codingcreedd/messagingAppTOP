@@ -6,9 +6,10 @@ const Nav = () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     return (
-        <div className='flex flex-col py-10 bg-gray-800 w-[15%] h-screen'>
+        <div className='flex flex-col pb-10 bg-[#1e1f26] w-[18%] h-screen'>
             <div>
                 <img src="" alt="" />
+                <h1 className='text-sky-600 px-10 py-10 font-bold text-xl'>WD</h1>
             </div>
 
             <div className='flex flex-col gap-5 text-white'>
@@ -19,12 +20,14 @@ const Nav = () => {
                             className={`flex gap-5 items-center py-3 cursor-pointer ${selectedIndex === index && 'border-r-[0.3rem]'} rounded-sm border-r-sky-600 w-full`}
                             onClick={() => setSelectedIndex(index)}
                         >
-                            <i className={`${header.iconClass} text-lg pl-10`}></i>
-                            <p className={`${selectedIndex === index ? 'text-sky-600 font-bold' : ''} text-lg`}>{header.title}</p>
+                            <i className={`${header.iconClass} text-xl pl-10`}></i>
+                            <p className={`${selectedIndex === index ? 'text-sky-600 font-bold' : ''}`}>{header.title}</p>
                         </div>
                     ))
                 }
             </div>
+
+            
 
         </div>
     )

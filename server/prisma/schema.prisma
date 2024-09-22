@@ -44,7 +44,7 @@ model Message {
 model Chat {
   id          Int       @id @default(autoincrement())
   name        String    @db.VarChar(55)
-  isGroupChat Boolean   @default(false)
+  isgroupchat Boolean   @default(false)
   users       User[]
   messages    Message[]
   createdAt   DateTime  @default(now())

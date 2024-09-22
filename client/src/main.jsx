@@ -5,11 +5,18 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ContextProvider from './components/ContextProvider.jsx'
 import Logs from './routes/Logs.jsx'
+import ChatBar from './components/ChatBar.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />
+    element: <App />,
+    children: [
+      {
+        path: '',
+        element: <ChatBar />
+      }
+    ]
   },
   {
     path: '/logs/:logType',
