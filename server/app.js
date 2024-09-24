@@ -45,9 +45,11 @@ app.use(passport.session());
 //Routes
 const user = require('./routes/user');
 const messages = require('./routes/messages');
+const chats = require('./routes/chats');
 
 app.use('/user', user);
 app.use('/messages', messages);
+app.use('/chats', chats);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

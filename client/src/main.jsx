@@ -5,16 +5,20 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ContextProvider from './components/ContextProvider.jsx'
 import Logs from './routes/Logs.jsx'
-import ChatBar from './components/ChatBar.jsx'
-
+import Chats from './components/Chats.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>  
+    ),
     children: [
       {
         path: '',
-        element: <ChatBar />
+        element: <Chats />
       }
     ]
   },

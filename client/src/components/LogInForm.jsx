@@ -22,7 +22,7 @@ const LogInForm = () => {
                 console.log(response)
                 if(response.data.message === 'Login successful'){
                     setAuthState(true);
-                    navigate('/');
+                    navigate('/', {replace: true});
                 }
             })
         } catch(err) {

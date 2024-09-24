@@ -1,9 +1,10 @@
 const verify = (req, res, next) => {
-    if(req.authenticated){
+    if(req.isAuthenticated()){
         next();
     } else {
         res.json({
-            message: 'Could not verify user'
+            message: 'Could not verify user',
+            authenticated: false
         })
     }
 }

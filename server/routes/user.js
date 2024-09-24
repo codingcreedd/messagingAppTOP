@@ -41,13 +41,8 @@ router.post('/signup', async (req, res) => {
 
 
         if(user){
-
-            const globalChat = prisma.chat.findFirst({
-                where: {name: 'Global Chat'}
-            });
-
             await prisma.chat.update({
-                where: {id: globalChat.id},
+                where: {id: 1},
                 data: {
                     users: {
                         connect: {id: user.id}
