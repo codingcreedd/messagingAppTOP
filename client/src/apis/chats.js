@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://localhost:3000/chats',
+    baseURL: 'http://localhost:3001/chats',
     withCredentials: true
 })

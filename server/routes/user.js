@@ -107,7 +107,7 @@ router.get('/logout', (req, res, next) => {
 //USER PROFILE
 //Update name, update password
 
-router.put('/:id/name', async (req, res) => {
+router.put('/:id/name', verify,  async (req, res) => {
     try {
         const {displayName} = req.body.displayName;
         const {id} = req.params;
@@ -129,9 +129,9 @@ router.put('/:id/name', async (req, res) => {
     }
 });
 
-router.put('/:id/password', async (req, res) => {
+router.put('/:id/password', verify,  async (req, res) => {
     try {
-        const {password, verifyOldPassword} = req.body.displayName;
+        const {password, verifyOldPassword} = req.body;
         const {id} = req.params;
         
         const user = await prisma.user.findUnique({
@@ -166,10 +166,92 @@ router.put('/:id/password', async (req, res) => {
     }
 });
 
-//Photo
+//get user friends
+
+router.get('/:user_id/friends', verify,  async (req, res) => {
+    const {user_id} = req.params;
+    try {
+        const userFriendsInfo = await prisma.user.findUnique({
+            where: {id: Number(user_id)},
+            select: {
+                friendOf: true,
+                friends: true,
+            }
+        });
+
+        
+
+        if(userFriendsInfo) {
+            res.status(200).json({
+                status: 'Retreived user information successfully',
+                userFriendsInfo: userFriendsInfo
+            })
+        } else {
+            res.status(403).json({status: 'Could not retreive user information'})
+        }
+
+    } catch(err) {
+        console.log(err);
+        res.status(500).json({status: 'Could not retreive user information'})
+    }
+})
 
 
+//add a friend
+router.post('/add-contact', verify,  async (req, res) => {
+    try {
+        const { email, currentUserId } = req.body;
 
+        const user = await prisma.user.findFirst({
+            where: { email }
+        });
+
+        if (user) {
+            const [updatedUser, updatedFriend] = await Promise.all([
+                prisma.user.update({
+                    where: {
+                        id: currentUserId
+                    },
+                    data: {
+                        friends: {
+                            connect: { id: user.id }
+                        }
+                    }
+                }),
+                prisma.user.update({
+                    where: {
+                        id: user.id
+                    },
+                    data: {
+                        friendOf: {
+                            connect: { id: currentUserId }
+                        }
+                    }
+                })
+            ]);
+
+            if (updatedUser && updatedFriend) {
+                res.status(201).json({
+                    status: 'Contact added successfully',
+                    updatedUser
+                });
+            } else {
+                res.status(403).json({
+                    status: 'Could not add new contact',
+                });
+            }
+
+        } else {
+            res.status(500).json({
+                status: 'This user does not use Whats Down'
+            });
+        }
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Could not update display name' });
+    }
+});
 
 
 module.exports = router;

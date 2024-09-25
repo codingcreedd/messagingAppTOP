@@ -15,7 +15,7 @@ function App() {
   }
 
   return (
-    <div className='flex'>
+    <div className='flex h-screen w-full relative'>
       <Nav />
       <Outlet />
     </div>

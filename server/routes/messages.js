@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const {PrismaClient} = require('@prisma/client');
+const { verify } = require('../config/verification');
 const prisma = new PrismaClient();
 
 
-router.get('/:chatid/chatMessage', async (req, res) => {
+router.get('/:chatid/chatMessage', verify,  async (req, res) => {
     try {
         const {chatid} = req.params;
         const messages = prisma.message.findMany({
@@ -32,7 +33,7 @@ router.get('/:chatid/chatMessage', async (req, res) => {
 });
 
 //get messages from certain text
-router.get('/messages', async (req, res) => {
+router.get('/messages', verify,  async (req, res) => {
     try {
         const {text} = req.body.text;
         const messages = prisma.message.findMany({
@@ -63,7 +64,7 @@ router.get('/messages', async (req, res) => {
 });
 
 //get all messages of a certain user
-router.get('/:user_id/messages', async (req, res) => {
+router.get('/:user_id/messages', verify,  async (req, res) => {
     try {
         const {user_id} = req.params;
         const messages = prisma.message.findMany({
@@ -92,7 +93,7 @@ router.get('/:user_id/messages', async (req, res) => {
 });
 
 //create message
-router.post('/create', async (req, res) => {
+router.post('/create', verify,  async (req, res) => {
     try {
         const {description, user_id, chat_id} = req.body;
 
@@ -124,7 +125,7 @@ router.post('/create', async (req, res) => {
 });
 
 //update message
-router.put('/:message_id/update', async (req, res) => {
+router.put('/:message_id/update', verify, async (req, res) => {
     try {
         const {message_id} = req.params;
         const {description} = req.body;
@@ -155,7 +156,7 @@ router.put('/:message_id/update', async (req, res) => {
     }
 });
 
-router.delete('/:message_id/delete', async (req, res) => {
+router.delete('/:message_id/delete', verify, async (req, res) => {
     try {
         const {message_id} = req.params;
 

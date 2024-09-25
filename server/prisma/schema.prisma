@@ -30,6 +30,8 @@ model User {
   salt         String
   messages     Message[]
   chats        Chat[]
+  friends      User[]    @relation("UserFriends")
+  friendOf     User[]    @relation("UserFriends")
 }
 
 model Message {
@@ -43,7 +45,7 @@ model Message {
 
 model Chat {
   id          Int       @id @default(autoincrement())
-  name        String    @db.VarChar(55)
+  name        String    @unique @db.VarChar(55)
   isgroupchat Boolean   @default(false)
   users       User[]
   messages    Message[]

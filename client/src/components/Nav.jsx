@@ -23,7 +23,7 @@ const Nav = () => {
     }
 
     return (
-        <div className='flex flex-col pb-10 bg-[#1e1f26] w-[18%] h-screen'>
+        <div className='flex flex-col pb-10 bg-[#2b2b2c] w-[18%] h-screen'>
             <div>
                 <img src="" alt="" />
                 <h1 className='text-sky-600 px-10 py-10 font-bold text-xl'>WD</h1>
@@ -33,10 +33,9 @@ const Nav = () => {
                 {
                     navHeaders.map((header, index) => (
                         <div 
-                            to={`${header.path}`}
                             key={header.index}
                             className={`flex gap-5 items-center py-3 cursor-pointer ${selectedIndex === index && 'border-r-[0.3rem]'} rounded-sm border-r-sky-600 w-full`}
-                            onClick={() => setSelectedIndex(index)}
+                            onClick={() => {setSelectedIndex(index); navigate(`${header?.path}`)}}
                         >
                             <i className={`${header.iconClass} text-xl pl-10`}></i>
                             <p className={`${selectedIndex === index ? 'text-sky-600 font-bold' : ''}`}>{header.title}</p>

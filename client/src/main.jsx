@@ -7,6 +7,12 @@ import ContextProvider from './components/ContextProvider.jsx'
 import Logs from './routes/Logs.jsx'
 import Chats from './components/Chats.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import Friends from './routes/Friends.jsx'
+import ChatRoom from './components/ChatRoom.jsx'
+import ChatLayout from './routes/ChatLayout.jsx'
+
+
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -18,7 +24,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Chats />
+        element: <ChatLayout />
+        ,children: [
+          {
+            path: '/:id/chat',
+            element: <ChatRoom />
+          }
+        ]
+      },
+      {
+        path: '/friends',
+        element: <Friends />
       }
     ]
   },

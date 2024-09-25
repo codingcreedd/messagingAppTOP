@@ -18,7 +18,8 @@ export const navHeaders = [
     {
         index: 3,
         title: 'Friends',
-        iconClass: 'bx bxs-contact'
+        iconClass: 'bx bxs-contact',
+        path: '/friends'
     },
     {
         index: 4,
