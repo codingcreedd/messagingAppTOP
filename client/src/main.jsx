@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Friends from './routes/Friends.jsx'
 import ChatRoom from './components/ChatRoom.jsx'
 import ChatLayout from './routes/ChatLayout.jsx'
-
+import EmptyChat from './components/EmptyChat.jsx'
 
 
 const router = createBrowserRouter([
@@ -26,6 +26,10 @@ const router = createBrowserRouter([
         path: '',
         element: <ChatLayout />
         ,children: [
+          {
+            path: '',
+            element: <EmptyChat />
+          },
           {
             path: '/:id/chat',
             element: <ChatRoom />
