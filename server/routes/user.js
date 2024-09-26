@@ -52,11 +52,13 @@ router.post('/signup', async (req, res) => {
 
             res.status(201).json({
                 message: 'User created successfully',
-                userCreated: user
+                userCreated: user,
+                status: 'success'
             })
         } else {
             res.status(500).json({
                 message: 'could not create user',
+                status: 'failure'
             })
         }
 
@@ -64,7 +66,8 @@ router.post('/signup', async (req, res) => {
     } catch(err) {
         console.log(err);
         res.status(500).json({
-            message: 'Error creating user'
+            message: 'Error creating user',
+            status: 'failure'
         })
     }
 });
@@ -77,12 +80,14 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 
     if(!req.session.passport || !req.session.passport.user) {
         return res.status(401).json({
-            message: 'Login failed'
+            message: 'Login failed',
+            status: 'failure'
         })
     } else {
         console.log(req.session.passport)
         return res.status(200).json({
-            message: 'Login successful'
+            message: 'Login successful',
+            status: 'success'
         })
     }
 });
@@ -93,7 +98,8 @@ router.get('/logout', (req, res, next) => {
             return next(err); 
         }
         res.status(200).json({
-            message: 'Logged out successfully'
+            message: 'Logged out successfully',
+            status: 'success'
         });
 
         if(req.session.passport) {
@@ -120,12 +126,13 @@ router.put('/:id/name', verify,  async (req, res) => {
         });
 
         res.status(201).json({
-            message: 'Updated display name successfuly'
+            message: 'Updated display name successfuly',
+            status: 'success'
         })
 
     } catch(err) {
         console.log(err);
-        res.status(500).json({message: 'Could not update display name'});
+        res.status(500).json({message: 'Could not update display name', status: 'failure'});
     }
 });
 
@@ -154,15 +161,16 @@ router.put('/:id/password', verify,  async (req, res) => {
             });
 
             res.status(201).json({
-                message: 'Updated password successfuly'
+                message: 'Updated password successfuly',
+                status: 'success'
             })
         } else {
-            res.status(401).json({message: 'Password is not verified...'});
+            res.status(401).json({message: 'Password is not verified...', status: 'failure'});
         }
 
     } catch(err) {
         console.log(err);
-        res.status(500).json({message: 'Could not update display name'});
+        res.status(500).json({message: 'Could not update display name', status: 'failure'});
     }
 });
 
@@ -183,16 +191,17 @@ router.get('/:user_id/friends', verify,  async (req, res) => {
 
         if(userFriendsInfo) {
             res.status(200).json({
-                status: 'Retreived user information successfully',
-                userFriendsInfo: userFriendsInfo
+                message: 'Retreived user information successfully',
+                userFriendsInfo: userFriendsInfo,
+                status: 'success'
             })
         } else {
-            res.status(403).json({status: 'Could not retreive user information'})
+            res.status(403).json({message: 'Could not retreive user information', status: 'failure'})
         }
 
     } catch(err) {
         console.log(err);
-        res.status(500).json({status: 'Could not retreive user information'})
+        res.status(500).json({message: 'Could not retreive user information', status: 'failure'})
     }
 })
 
@@ -232,24 +241,27 @@ router.post('/add-contact', verify,  async (req, res) => {
 
             if (updatedUser && updatedFriend) {
                 res.status(201).json({
-                    status: 'Contact added successfully',
-                    updatedUser
+                    message: 'Contact added successfully',
+                    updatedUser,
+                    status: 'success'
                 });
             } else {
                 res.status(403).json({
-                    status: 'Could not add new contact',
+                    message: 'Could not add new contact',
+                    status: 'failure'
                 });
             }
 
         } else {
             res.status(500).json({
-                status: 'This user does not use Whats Down'
+                message: 'This user does not use Whats Down',
+                status: 'failure'
             });
         }
 
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: 'Could not update display name' });
+        res.status(500).json({ message: 'Could not update display name', status: 'failure' });
     }
 });
 

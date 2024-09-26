@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../components/ContextProvider'
 import user_api from '../apis/user'
 import { useNavigate } from 'react-router-dom';
+import Loader from '../components/Loader';
 
 export default function Friends() {
 
-    const {friends, setFriends, userId, friendOf, setFriendOf} = useContext(Context);
+    const {friends, setFriends, userId, friendOf, setFriendOf, loading, setLoading} = useContext(Context);
     const [newFriendEmail, setNewFriendEmail] = useState('');
 
     const navigate = useNavigate();
@@ -27,11 +28,13 @@ export default function Friends() {
 
     const handleAddFriend = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await user_api.post('/add-contact', {
                 email: newFriendEmail,
                 currentUserId: userId
             }).then(response => {
+                setLoading(false);
                 navigate(0);
             })
         } catch(err) {
@@ -41,6 +44,9 @@ export default function Friends() {
 
     return (
         <div className="min-h-screen w-[82%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-8">
+          {
+            loading && <Loader />
+          }
           <div className="mx-auto">
             <h1 className="text-4xl font-bold mb-8 text-center text-white">
               Your Friends

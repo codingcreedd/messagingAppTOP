@@ -3,6 +3,7 @@ import chat_api from '../apis/chats'
 import user_api from '../apis/user'
 import { Context } from './ContextProvider'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../components/Loader'
 
 export default function AddChat() {
   const [name, setName] = useState('')
@@ -13,7 +14,7 @@ export default function AddChat() {
   const [selectedContactId, setSelectedContactId] = useState(0);
 
   const navigate = useNavigate();
-  const {friends, setFriends, userId} = useContext(Context);
+  const {friends, setFriends, userId, loading, setLoading} = useContext(Context);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -30,7 +31,8 @@ export default function AddChat() {
 }, [])
 
   const addChat = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setLoading(true);
     try {
         await chat_api.post('/add', {
             name,
@@ -39,6 +41,7 @@ export default function AddChat() {
             user_id: userId,
             contact_id: selectedContactId
         }).then(response  => {
+          setLoading(false);
             navigate(0);
         })
     } catch(err) {
@@ -48,6 +51,9 @@ export default function AddChat() {
 
   return (
     <div className="h-screen w-full flex items-center justify-center bg-[#11171f] text-white p-4">
+      {
+        loading && <Loader description="Adding Chat"/>
+      }
       <form onSubmit={addChat} className="w-full max-w-md bg-[#1c2531] p-8 rounded-2xl shadow-2xl space-y-6 transform hover:scale-105 transition-transform duration-300">
         <h2 className="text-3xl font-bold text-center mb-6 text-white">New Chat</h2>
         

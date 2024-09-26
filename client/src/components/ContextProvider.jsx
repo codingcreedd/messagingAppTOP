@@ -11,6 +11,7 @@ const ContextProvider = ({children}) => {
     const [friends, setFriends] = useState([]);
     const [friendOf, setFriendOf] = useState([]);
     const [openChat, setOpenChat] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const states = {
         authState, setAuthState,
@@ -19,7 +20,8 @@ const ContextProvider = ({children}) => {
         userId, setUserId,
         friends, setFriends,
         friendOf, setFriendOf,
-        openChat, setOpenChat
+        openChat, setOpenChat,
+        loading, setLoading
     }
 
   return (

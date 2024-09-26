@@ -15,19 +15,21 @@ router.get('/:chatid/chatMessage', verify,  async (req, res) => {
 
         if(!messages){
             res.status(401).json({
-                status: 'Could not get messages'
+                message: 'Could not retreive messages', status: 'failure'
             })
         }
 
         res.status(200).json({
-            status: 'Retreived messages successfully',
-            messages: messages
+            message: 'Retreived messages successfully',
+            messages: messages,
+            status: 'success'
         });
 
     } catch(err) {
         console.log(err);
         res.status(500).json({
-            status: 'Could not get messages'
+            message: 'Could not get messages',
+            status: 'failure'
         })
     }
 });
@@ -46,19 +48,22 @@ router.get('/messages', verify,  async (req, res) => {
 
         if(!messages){
             res.status(401).json({
-                status: 'Could not get messages'
+                message: 'Could not get messages',
+                status: 'failure'
             })
         }
 
         res.status(200).json({
-            status: 'Retreived messages successfully',
-            messages: messages
+            message: 'Retreived messages successfully',
+            messages: messages,
+            status: 'success'
         });
 
     } catch(err) {
         console.log(err);
         res.status(500).json({
-            status: 'Could not get messages'
+            message: 'Could not get messages',
+            status: 'failure'
         })
     }
 });
@@ -75,19 +80,22 @@ router.get('/:user_id/messages', verify,  async (req, res) => {
 
         if(!messages){
             res.status(401).json({
-                status: 'Could not get messages'
+                message: 'Could not get messages',
+                status: 'failure'
             })
         }
 
         res.status(200).json({
-            status: 'Retreived messages successfully',
-            messages: messages
+            message: 'Retreived messages successfully',
+            messages: messages,
+            status: 'success'
         });
 
     } catch(err) {
         console.log(err);
         res.status(500).json({
-            status: 'Could not get messages'
+            message: 'Could not get messages',
+            status: 'failure'
         })
     }
 });
@@ -95,31 +103,35 @@ router.get('/:user_id/messages', verify,  async (req, res) => {
 //create message
 router.post('/create', verify,  async (req, res) => {
     try {
-        const {description, user_id, chat_id} = req.body;
+        const {description, chat_id} = req.body;
+        const user_id = req.user.id;
 
-        const message = prisma.message.create({
+        const message_ = prisma.message.create({
             data: {
                 description: description,
                 userId: user_id,
-                chatId: chat_id
+                chatId: Number(chat_id)
             }
         });
 
-        if(!message){
+        if(!message_){
             res.status(401).json({
-                status: 'Could not create message'
+                message: 'Could not create message',
+                status: 'failure'
             })
         }
 
         res.status(200).json({
-            status: 'Created message successfully',
-            message: message
+            message: 'Created message successfully',
+            message_: message_,
+            status: 'success'
         });
 
     } catch(err) {
         console.log(err);
         res.status(500).json({
-            status: 'Could not create message'
+            message: 'Could not create message',
+            status: 'failure'
         })
     }
 });
@@ -130,28 +142,31 @@ router.put('/:message_id/update', verify, async (req, res) => {
         const {message_id} = req.params;
         const {description} = req.body;
 
-        const message = prisma.message.update({
+        const message_ = prisma.message.update({
             where: {id: Nuumber(message_id)},
             data: {
                 description: description,
             }
         });
 
-        if(!message){
+        if(!message_){
             res.status(401).json({
-                status: 'Could not update message'
+                message: 'Could not update message',
+                status: 'failure'
             })
         }
 
         res.status(200).json({
-            status: 'Updated message successfully',
-            message: message
+            message: 'Updated message successfully',
+            message_: message_,
+            status: 'success'
         });
 
     } catch(err) {
         console.log(err);
         res.status(500).json({
-            status: 'Could not update message'
+            message: 'Could not update message',
+            status: 'failure'
         })
     }
 });
@@ -160,25 +175,28 @@ router.delete('/:message_id/delete', verify, async (req, res) => {
     try {
         const {message_id} = req.params;
 
-        const message = prisma.message.delete({
+        const message_ = prisma.message.delete({
             where: {id: Number(message_id)}
         })
 
-        if(!message){
+        if(!message_){
             res.status(401).json({
-                status: 'Could not delete message'
+                message: 'Could not delete message',
+                status: 'failure'
             })
         }
 
         res.status(200).json({
-            status: 'Deleted message successfully',
-            message: message
+            message: 'Deleted message successfully',
+            message_: message_,
+            status: 'success'
         });
 
     } catch(err) {
         console.log(err);
         res.status(500).json({
-            status: 'Could not delete message'
+            message: 'Could not delete message',
+            status: 'failure'
         })
     }
 });

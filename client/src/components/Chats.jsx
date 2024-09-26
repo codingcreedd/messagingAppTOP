@@ -12,7 +12,7 @@ const Chats = () => {
 
     useEffect(() => {
         const fetchChats = async () => {
-            const response = await chats_api.get('/', { user_id: userId });
+            const response = await chats_api.get('/');
             setChats(response.data.chats);
         };
         fetchChats();
@@ -51,7 +51,7 @@ const Chats = () => {
                 { (chats && chats.length > 0) ? (
                     chats.map(chat => (
                         <div key={chat?.id}>
-                            <Chat name={chat?.name} isGroupChat={chat?.isgroupchat}/>
+                            <Chat name={chat?.name} isGroupChat={chat?.isgroupchat} id={chat?.id}/>
                             <hr className='mt-3 mb-3 mx-10'/>
                         </div>
                     ))
