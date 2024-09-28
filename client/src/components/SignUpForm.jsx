@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Context } from './ContextProvider';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, replace, useNavigate } from 'react-router-dom';
 import user_api from '../apis/user'
 
 const SignUpForm = () => {
@@ -20,7 +20,7 @@ const SignUpForm = () => {
                 displayName: displayName,
                 email: email
             }).then(response => {
-                navigate('/logs/login');
+                navigate('/logs/login', {replace: true});
             })
         } catch(err) {
             console.log(err);

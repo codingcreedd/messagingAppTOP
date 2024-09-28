@@ -29,7 +29,7 @@ const Chats = () => {
     }, [addChat]);
 
     return (
-        <div className='flex flex-col w-[25%] bg-[#11171f] py-10' ref={container}>
+        <div className='flex flex-col w-[25%] bg-[#11171f] py-10 overflow-auto' ref={container}>
             <div className={`chatContainer absolute inset-0 hidden`}>
                 {addChat && <AddChat />}
             </div>
@@ -40,7 +40,7 @@ const Chats = () => {
                 <input type="text" placeholder='Search' className='bg-transparent text-white placeholder:text-white outline-none' />
             </div>
             
-            <Chat icon="bx bx-globe text-[3rem] text-white" global={true} name="Global Chat" isGroupChat={TextTrackCueList} />
+            <Chat icon="bx bx-globe text-[3rem] text-white" global={true} name="Global Chat" isGroupChat={TextTrackCueList} id={1} />
 
             <div className='flex items-center gap-5 text-white mt-10 mx-12 cursor-pointer'>
                 <div className='text-xl'><i className='bx bx-plus'></i></div>

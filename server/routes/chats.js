@@ -17,11 +17,7 @@ router.get('/', verify,  async (req, res) => {
                 id: {
                     not: 1
                 }
-            },
-            include: {
-                users: true,
-                messages: true
-            },
+            }
         });
 
         if(!chats) {
@@ -104,7 +100,11 @@ router.get('/:id/chat', verify, async (req, res) => {
             where: {id: Number(id)},
             include: {
                 users: true,
-                messages: true
+                messages: {
+                    orderBy: {
+                        createdAt: 'asc'
+                    }
+                }
             }
         });
 

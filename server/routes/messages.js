@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 router.get('/:chatid/chatMessage', verify,  async (req, res) => {
     try {
         const {chatid} = req.params;
-        const messages = prisma.message.findMany({
+        const messages = await prisma.message.findMany({
             where: {
                 chatId: Number(chatid)
             }
@@ -38,7 +38,7 @@ router.get('/:chatid/chatMessage', verify,  async (req, res) => {
 router.get('/messages', verify,  async (req, res) => {
     try {
         const {text} = req.body.text;
-        const messages = prisma.message.findMany({
+        const messages = await prisma.message.findMany({
             where: {
                 description: {
                     contains: text
@@ -72,7 +72,7 @@ router.get('/messages', verify,  async (req, res) => {
 router.get('/:user_id/messages', verify,  async (req, res) => {
     try {
         const {user_id} = req.params;
-        const messages = prisma.message.findMany({
+        const messages = await prisma.message.findMany({
             where: {
                 userId: Number(user_id)
             }
@@ -103,16 +103,18 @@ router.get('/:user_id/messages', verify,  async (req, res) => {
 //create message
 router.post('/create', verify,  async (req, res) => {
     try {
+        console.log('RANNNN')
         const {description, chat_id} = req.body;
         const user_id = req.user.id;
 
-        const message_ = prisma.message.create({
+        const message_ = await prisma.message.create({
             data: {
                 description: description,
                 userId: user_id,
                 chatId: Number(chat_id)
             }
         });
+
 
         if(!message_){
             res.status(401).json({
@@ -139,11 +141,12 @@ router.post('/create', verify,  async (req, res) => {
 //update message
 router.put('/:message_id/update', verify, async (req, res) => {
     try {
+        console.log('raaaaaaaaaaaaaaaaaaaaaaaan')
         const {message_id} = req.params;
         const {description} = req.body;
 
-        const message_ = prisma.message.update({
-            where: {id: Nuumber(message_id)},
+        const message_ = await prisma.message.update({
+            where: {id: Number(message_id)},
             data: {
                 description: description,
             }
@@ -175,7 +178,7 @@ router.delete('/:message_id/delete', verify, async (req, res) => {
     try {
         const {message_id} = req.params;
 
-        const message_ = prisma.message.delete({
+        const message_ = await prisma.message.delete({
             where: {id: Number(message_id)}
         })
 

@@ -2,36 +2,53 @@ import React, { useContext, useState } from 'react'
 import { Context } from './ContextProvider'
 import {Link, useNavigate} from 'react-router-dom'
 import user_api from '../apis/user'
+import Loader from './Loader'
+import PopUpMessage from './PopUpMessage'
 
 const LogInForm = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {setSignUp, setAuthState} = useContext(Context);
+    const {setSignUp, setAuthState, loading, setLoading, popup, setPopUp} = useContext(Context);
 
     const navigate = useNavigate();
 
     const logIn = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await user_api.post('/login', {
                 email,
                 pw: password
             }).then(response => {
                 console.log(response)
+                setLoading(false);
+                setPopUp({render: true, message: response.data.message, status: response.data.status});
                 if(response.data.message === 'Login successful'){
-                    setAuthState(true);
-                    navigate('/', {replace: true});
+                    setTimeout(() => {
+                      setPopUp({render: false, ...popup})
+                      setAuthState(true);
+                      navigate('/', {replace: true});
+                    }, 300)
                 }
             })
         } catch(err) {
-            console.log(err);
+            // console.log(err);
+            setLoading(false);
+            setPopUp({render: true, message: 'Failed to Login', status: 'failure'});
         }
     }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-950">
+          {
+            loading && <Loader description={`Logging In`}/>
+          }
+
+          {
+            popup.render && <PopUpMessage status={popup.status} message={popup.message}/>
+          }
           <div className="bg-gray-900 p-8 rounded-lg shadow-xl w-full max-w-md">
             <h2 className="text-3xl font-bold mb-6 text-center text-gray-100">Log In</h2>
             <form className="space-y-6" onSubmit={logIn}>

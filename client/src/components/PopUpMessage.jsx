@@ -1,4 +1,4 @@
-export default function PopUpMessage(status, message) {
+export default function PopUpMessage({status, message}) {
     const baseStyles = "fixed bottom-4 right-4 p-4 rounded-lg shadow-lg flex items-center space-x-3 text-white"
     const successStyles = "bg-gradient-to-r from-emerald-500 to-emerald-700"
     const failureStyles = "bg-gradient-to-r from-rose-500 to-rose-700"

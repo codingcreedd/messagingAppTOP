@@ -4,6 +4,7 @@ import user_api from '../apis/user'
 import { Context } from './ContextProvider'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
+import PopUpMessage from '../components/PopUpMessage'
 
 export default function AddChat() {
   const [name, setName] = useState('')
@@ -14,7 +15,7 @@ export default function AddChat() {
   const [selectedContactId, setSelectedContactId] = useState(0);
 
   const navigate = useNavigate();
-  const {friends, setFriends, userId, loading, setLoading} = useContext(Context);
+  const {friends, setFriends, userId, loading, setLoading, popup, setPopUp} = useContext(Context);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -41,11 +42,18 @@ export default function AddChat() {
             user_id: userId,
             contact_id: selectedContactId
         }).then(response  => {
-          setLoading(false);
-            navigate(0);
+            setLoading(false);
+            setPopUp({render: true, message: response.data.message, status: response.data.status})
+
+            setTimeout(() => {
+              setPopUp({render: false, message: '', status: ''});
+              navigate(0);
+            }, 300)
+
         })
     } catch(err) {
-        console.log(err);
+      setLoading(false);
+      setPopUp({render: true, message: 'Could not add chat', status: 'failure'})
     }
   }
 
@@ -54,6 +62,11 @@ export default function AddChat() {
       {
         loading && <Loader description="Adding Chat"/>
       }
+
+      {
+        popup.render && <PopUpMessage status={popup.status} message={popup.message} />
+      }
+      
       <form onSubmit={addChat} className="w-full max-w-md bg-[#1c2531] p-8 rounded-2xl shadow-2xl space-y-6 transform hover:scale-105 transition-transform duration-300">
         <h2 className="text-3xl font-bold text-center mb-6 text-white">New Chat</h2>
         
