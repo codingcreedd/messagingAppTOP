@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import chat_api from '../apis/chats'
 import { Context } from './ContextProvider';
 import message_api from '../apis/messages'
-import MessageActionTab from '../components/MessageActionTab'
+import MessageActionTab from './MessageActionTab'
 import Loader from './Loader';
 import FriendList from './FriendList';
 

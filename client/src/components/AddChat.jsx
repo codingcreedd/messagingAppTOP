@@ -3,8 +3,8 @@ import chat_api from '../apis/chats'
 import user_api from '../apis/user'
 import { Context } from './ContextProvider'
 import { useNavigate } from 'react-router-dom'
-import Loader from '../components/Loader'
-import PopUpMessage from '../components/PopUpMessage'
+import Loader from './Loader'
+import PopUpMessage from './PopUpMessage'
 
 export default function AddChat() {
   const [name, setName] = useState('')

@@ -32,6 +32,8 @@ model User {
   chats        Chat[]
   friends      User[]    @relation("UserFriends")
   friendOf     User[]    @relation("UserFriends")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now())
 }
 
 model Message {

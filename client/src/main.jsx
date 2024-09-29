@@ -11,6 +11,7 @@ import Friends from './routes/Friends.jsx'
 import ChatRoom from './components/ChatRoom.jsx'
 import ChatLayout from './routes/ChatLayout.jsx'
 import EmptyChat from './components/EmptyChat.jsx'
+import Profile from './routes/Profile.jsx'
 
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: '/logs/:logType',
     element: <Logs />
+  },
+  {
+    path: '/:user_id/profile',
+    element: <Profile />
   }
   
 ])

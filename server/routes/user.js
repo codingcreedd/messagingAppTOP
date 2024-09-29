@@ -113,22 +113,67 @@ router.get('/logout', (req, res, next) => {
 //USER PROFILE
 //Update name, update password
 
+//get user information
+router.get('/:id/user-info', verify, async (req, res) => {
+    try {
+        const {id} = req.params;
+        if(Number(id) === req.user.id) {
+            const user = await prisma.user.findUnique({
+                where: {id: Number(id)},
+                select: {
+                    id: true,
+                    displayName: true,
+                    email: true,
+                    createdAt: true
+                }
+            });
+    
+            if(!user) {
+                res.status(500).json({message: 'Could not retreive user', status: 'failure'});
+            }
+    
+            res.status(200).json({
+                message: 'Retreived user information successfully',
+                status: 'success',
+                user: user
+            })
+        } else {
+            res.status(403).json({
+                message: 'Wrong User',
+                status: 'failure'
+            })
+        }
+
+    } catch(err) {
+        console.log(err);
+        res.status(500).json({message: 'Could not retreive user information', status: 'failure'})
+    }
+})
+
+//change profile display name
 router.put('/:id/name', verify,  async (req, res) => {
     try {
-        const {displayName} = req.body.displayName;
+        const {displayName} = req.body;
         const {id} = req.params;
 
-        await prisma.user.update({
-            where: {id: Number(id)},
-            data: {
-                displayName: displayName
-            }
-        });
-
-        res.status(201).json({
-            message: 'Updated display name successfuly',
-            status: 'success'
-        })
+        if(Number(id) === req.user.id) {
+            await prisma.user.update({
+                where: {id: Number(id)},
+                data: {
+                    displayName: displayName
+                }
+            });
+    
+            res.status(201).json({
+                message: 'Updated display name successfuly',
+                status: 'success'
+            })
+        } else {
+            res.status(403).json({
+                message: 'Wrong user',
+                status: 'failure'
+            })
+        }
 
     } catch(err) {
         console.log(err);
@@ -141,36 +186,40 @@ router.put('/:id/password', verify,  async (req, res) => {
         const {password, verifyOldPassword} = req.body;
         const {id} = req.params;
         
-        const user = await prisma.user.findUnique({
-            where: { id: Number(id) }
-        });
-
-        const passVerified = validatePassword(verifyOldPassword, user.hashpassword, user.salt);
-        
-
-        if(passVerified){
-            const newPassword = genPassword(password);
-            const newHash = newPassword.hash;
-            const newSalt = newPassword.salt;
-            await prisma.user.update({
-                where: {id: Number(id)},
-                data: {
-                    hashpassword: newHash,
-                    salt: newSalt
-                }
+        if(Number(id) === req.user.id) {
+            const user = await prisma.user.findUnique({
+                where: { id: Number(id) }
             });
-
-            res.status(201).json({
-                message: 'Updated password successfuly',
-                status: 'success'
-            })
+    
+            const passVerified = validatePassword(verifyOldPassword, user.hashpassword, user.salt);
+            
+    
+            if(passVerified){
+                const newPassword = genPassword(password);
+                const newHash = newPassword.hash;
+                const newSalt = newPassword.salt;
+                await prisma.user.update({
+                    where: {id: Number(id)},
+                    data: {
+                        hashpassword: newHash,
+                        salt: newSalt
+                    }
+                });
+    
+                res.status(200).json({
+                    message: 'Updated password successfuly',
+                    status: 'success'
+                })
+            } else {
+                res.status(401).json({message: 'Password is not verified...', status: 'failure'});
+            }
         } else {
-            res.status(401).json({message: 'Password is not verified...', status: 'failure'});
+            res.status(403).json({message: 'Wrong User', status: 'failure'})
         }
 
     } catch(err) {
         console.log(err);
-        res.status(500).json({message: 'Could not update display name', status: 'failure'});
+        res.status(500).json({message: 'Could not update password', status: 'failure'});
     }
 });
 
@@ -179,24 +228,28 @@ router.put('/:id/password', verify,  async (req, res) => {
 router.get('/:user_id/friends', verify,  async (req, res) => {
     const {user_id} = req.params;
     try {
-        const userFriendsInfo = await prisma.user.findUnique({
-            where: {id: Number(user_id)},
-            select: {
-                friendOf: true,
-                friends: true,
+        if(Number(user_id) === req.user.id) {
+            const userFriendsInfo = await prisma.user.findUnique({
+                where: {id: Number(user_id)},
+                select: {
+                    friendOf: true,
+                    friends: true,
+                }
+            });
+    
+            
+    
+            if(userFriendsInfo) {
+                res.status(200).json({
+                    message: 'Retreived user information successfully',
+                    userFriendsInfo: userFriendsInfo,
+                    status: 'success'
+                })
+            } else {
+                res.status(403).json({message: 'Could not retreive user information', status: 'failure'})
             }
-        });
-
-        
-
-        if(userFriendsInfo) {
-            res.status(200).json({
-                message: 'Retreived user information successfully',
-                userFriendsInfo: userFriendsInfo,
-                status: 'success'
-            })
         } else {
-            res.status(403).json({message: 'Could not retreive user information', status: 'failure'})
+            res.status(403).json({message: 'Wrong User', status: 'failure'})
         }
 
     } catch(err) {
@@ -209,7 +262,7 @@ router.get('/:user_id/friends', verify,  async (req, res) => {
 //add a friend
 router.post('/add-contact', verify,  async (req, res) => {
     try {
-        const { email, currentUserId } = req.body;
+        const { email } = req.body;
 
         const user = await prisma.user.findFirst({
             where: { email }
@@ -219,7 +272,7 @@ router.post('/add-contact', verify,  async (req, res) => {
             const [updatedUser, updatedFriend] = await Promise.all([
                 prisma.user.update({
                     where: {
-                        id: currentUserId
+                        id: req.user.id
                     },
                     data: {
                         friends: {
@@ -233,7 +286,7 @@ router.post('/add-contact', verify,  async (req, res) => {
                     },
                     data: {
                         friendOf: {
-                            connect: { id: currentUserId }
+                            connect: { id: req.user.id }
                         }
                     }
                 })
@@ -264,6 +317,8 @@ router.post('/add-contact', verify,  async (req, res) => {
         res.status(500).json({ message: 'Could not update display name', status: 'failure' });
     }
 });
+
+
 
 
 module.exports = router;

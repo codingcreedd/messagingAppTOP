@@ -7,6 +7,7 @@ import { Context } from './ContextProvider';
 const Nav = () => {
 
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const {userId} = useContext(Context);
     const navigate = useNavigate();
 
     const logOut = async () => {
@@ -44,7 +45,10 @@ const Nav = () => {
                 }
             </div>
 
-            <div onClick={logOut}>Logout</div>
+            <div className='flex items-center gap-10 text-white mt-auto px-10'>
+                <Link to={`/${userId}/profile`} className='px-5 rounded-xl py-2 bg-gradient-to-r from-sky-600 to-sky-800'>ID: {userId}</Link>
+                <button onClick={logOut} className='px-10 py-2 bg-gradient-to-r from-sky-600 to-sky-800 rounded-xl'>Logout</button>
+            </div>
 
         </div>
     )
