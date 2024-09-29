@@ -5,6 +5,7 @@ import { Context } from './ContextProvider';
 import message_api from '../apis/messages'
 import MessageActionTab from '../components/MessageActionTab'
 import Loader from './Loader';
+import FriendList from './FriendList';
 
 const ChatRoom = () => {
 
@@ -20,6 +21,7 @@ const ChatRoom = () => {
   const [selectEdit, setSelectEdit] = useState(false);
   const [updateChat, setUpdateChat] = useState(false);
   const [editedMessage, setEditedMessage] = useState('');
+  const [displayAddFriends, setDisplayAddFriends] = useState(false);
 
   const {userId, loading, setLoading, popup, setPopUp} = useContext(Context);
 
@@ -85,12 +87,7 @@ const ChatRoom = () => {
   }
 
   const handleEdit = async (message_id) => {
-
-    console.log('ra')
     setLoading(true);
-    console.log(message_id)
-    console.log(editedMessage)
-
     try {
       await message_api.put(`/${message_id}/update`, {description: editedMessage})
       .then(response => {setSelectEdit(false); setMessageTab(false); setLoading(false); setUpdateChat(!updateChat)}) 
@@ -132,6 +129,10 @@ const ChatRoom = () => {
       {
         loading && <Loader />
       }
+
+      {
+        displayAddFriends && <FriendList user_id={userId}/>
+      }
       <div className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-4 rounded-t-2xl flex items-center space-x-4">
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#3a7bd5] to-[#00d2ff] flex items-center justify-center text-2xl font-bold">
           {chat?.chatContent?.name?.charAt(0)}{chat?.chatContent?.name?.charAt(1)}
@@ -145,7 +146,12 @@ const ChatRoom = () => {
             ))}
             {chat?.users?.length > 6 && <span>...</span>}
           </div>
+          
         </div>
+        {
+          chat?.chatContent?.isgroupchat && <button className='px-10 py-2 bg-gradient-to-r from-sky-600 to-sky-300 rounded-lg font-bold text-sm'
+          onClick={() => {setDisplayAddFriends(true)}}>Add User</button>  
+        }
       </div>
 
       {/* Chat Messages */}

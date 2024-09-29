@@ -141,6 +141,41 @@ router.get('/:id/chat', verify, async (req, res) => {
         console.log(err);
         res.status(500).json({message: 'Could not get chat', status: 'failure'});
     }
+});
+
+router.put('/:chat_id/add-user', verify, async (req, res) => {
+    try {
+        const {chat_id} = req.params;
+        const {user_id} = req.body;
+
+        const chat = await prisma.chat.findUnique({
+            where: {id: Number(chat_id)}
+        });
+
+        if(chat.isgroupchat) {
+            const updateChat = await prisma.chat.update({
+                where: {id: Number(chat_id)},
+                data: {
+                    users: {
+                        connect: {id: user_id}
+                    }
+                }
+            })
+
+            if(updateChat) {
+                res.status(201).json({message: 'User added to the group successfully', status: 'success' })
+            } else {
+                res.status(403).json({message: 'Failed to add user to the chat', status: 'failure' })
+            }
+
+        } else {
+            return res.status(500).json({message: 'User cannot be added because it is not a group chat', status: 'failure'});
+        }
+
+
+    } catch(err) {
+        console.log(err);
+    }
 })
 
   

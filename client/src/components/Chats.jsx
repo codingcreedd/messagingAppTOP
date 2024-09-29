@@ -4,11 +4,13 @@ import Chat from './Chat';
 import chats_api from '../apis/chats';
 import AddChat from './AddChat';
 import gsap from 'gsap';
+import { useNavigate } from 'react-router-dom';
 
 const Chats = () => {
     const container = useRef();
     const { chats, setChats, userId } = useContext(Context);
     const [addChat, setAddChat] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchChats = async () => {
@@ -44,7 +46,7 @@ const Chats = () => {
 
             <div className='flex items-center gap-5 text-white mt-10 mx-12 cursor-pointer'>
                 <div className='text-xl'><i className='bx bx-plus'></i></div>
-                <p onClick={() => { setAddChat(true); }}>Add Chat</p>
+                <p onClick={() => { setAddChat(true); navigate('/', {replace: true}) }}>Add Chat</p>
             </div>
 
             <div className='flex flex-col mt-10'>
