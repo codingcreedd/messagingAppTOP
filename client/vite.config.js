@@ -4,5 +4,5 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "https://messageapp-one.vercel.app/src/main.jsx",
+  base: "https://whatsup-bice.vercel.app/src/main.jsx",
 });

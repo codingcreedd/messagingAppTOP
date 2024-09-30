@@ -2,7 +2,7 @@
   "name": "client",
   "private": true,
   "version": "0.0.0",
-  "homepage": "./",
+  "homepage": "https://whatsup-bice.vercel.app/",
   "type": "module",
   "scripts": {
     "dev": "vite",
