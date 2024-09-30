@@ -51,7 +51,9 @@ app.use('/user', user);
 app.use('/messages', messages);
 app.use('/chats', chats);
 
-const port = process.env.PORT;
-app.listen(port, () => {
-    console.log(`Server is up an running on server ${port}`);
-})
+// const port = process.env.PORT;
+// app.listen(port, () => {
+//     console.log(`Server is up an running on server ${port}`);
+// })
+
+module.exports = app;
