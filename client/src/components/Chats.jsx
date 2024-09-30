@@ -31,7 +31,7 @@ const Chats = () => {
     }, [addChat]);
 
     return (
-        <div className='flex flex-col w-[25%] bg-[#11171f] py-10 overflow-auto' ref={container}>
+        <div className='flex flex-col w-[25%] bg-[#11171f] py-10' ref={container}>
             <div className={`chatContainer absolute inset-0 hidden`}>
                 {addChat && <AddChat />}
             </div>
@@ -49,7 +49,7 @@ const Chats = () => {
                 <p onClick={() => { setAddChat(true); navigate('/', {replace: true}) }}>Add Chat</p>
             </div>
 
-            <div className='flex flex-col mt-10'>
+            <div className='flex flex-col mt-10 overflow-auto'>
                 { (chats && chats.length > 0) ? (
                     chats.map(chat => (
                         <div key={chat?.id}>
