@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: '/chats',
+    baseURL: 'https://messagingapptop.onrender.com/chats',
     withCredentials: true,
     validateStatus: (status) => {
         return true;

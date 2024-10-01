@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-    baseURL: '/user',
+    baseURL: 'https://messagingapptop.onrender.com/user',
     withCredentials: true,
     validateStatus: (status) => {
         return true;
