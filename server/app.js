@@ -7,7 +7,7 @@ const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', "https://whatsup-bice.vercel.app/"];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
 //middlewares
 app.use(cors({
@@ -51,9 +51,9 @@ app.use('/user', user);
 app.use('/messages', messages);
 app.use('/chats', chats);
 
-// const port = process.env.PORT;
-// app.listen(port, () => {
-//     console.log(`Server is up an running on server ${port}`);
-// })
+const port = process.env.PORT;
+app.listen(port, () => {
+    console.log(`Server is up an running on server ${port}`);
+})
 
 module.exports = app;
