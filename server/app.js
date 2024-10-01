@@ -7,7 +7,7 @@ const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'https://messaging-app-top.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'https://messaging-app-top.vercel.app', 'https://whatsuptop.netlify.app'];
 
 //middlewares
 app.use(cors({
