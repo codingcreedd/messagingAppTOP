@@ -22,8 +22,6 @@ const LogInForm = () => {
                 email,
                 pw: password
             }).then(response => {
-                console.log(response)
-                setLoading(false);
                 setPopUp({render: true, message: response.data.message, status: response.data.status});
                 if(response.data.message === 'Login successful'){
                     setTimeout(() => {
