@@ -25,6 +25,7 @@ const LogInForm = () => {
                 setPopUp({render: true, message: response.data.message, status: response.data.status});
                 if(response.data.message === 'Login successful'){
                     setTimeout(() => {
+                      setLoading(false);
                       setPopUp({render: false, ...popup})
                       setAuthState(true);
                       navigate('/', {replace: true});

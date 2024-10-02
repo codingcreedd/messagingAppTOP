@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
   useLayoutEffect(() => {
     const verification = async () => {
       await user_api.get('/protected').then(response => {
-        console.log(response.data.authenticated)
+        console.log('Authenticated: ' + response.data.authenticated)
         if(response.data.authenticated){
           setAuthState(true);
           setUserId(response.data.user.id);
