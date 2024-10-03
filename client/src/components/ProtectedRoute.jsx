@@ -9,7 +9,14 @@ const ProtectedRoute = ({ children }) => {
 
   useLayoutEffect(() => {
     const verification = async () => {
-      await user_api.get('/protected').then(response => {
+
+      const token = localStorage.getItem("token");
+
+      await user_api.get('/protected', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(response => {
         console.log('Authenticated: ' + response.data.authenticated)
         if(response.data.authenticated){
           setAuthState(true);

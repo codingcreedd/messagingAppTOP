@@ -24,7 +24,7 @@ const LogInForm = () => {
             }).then(response => {
                 setPopUp({render: true, message: response.data.message, status: response.data.status});
                 if(response.data.message === 'Login successful'){
-                    // localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("token", response.data.token);
                     setTimeout(() => {
                       setLoading(false);
                       setPopUp({render: false, ...popup})

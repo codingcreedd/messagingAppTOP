@@ -4,11 +4,14 @@ const secretKey = require('../config/jwtConfig');
 const verify = (req, res, next) => {
     const authHeader = req.header("Authorization");
     if(!authHeader) {
+        console.log('Missing token')
         return res.status(401).json({message: "Unauthorized: Missing Token"});
     }
 
     const [bearer, token] = authHeader.split(" ");
+    console.log('Bearer: ' + bearer)
     if(bearer !== "Bearer" || !token) {
+        console.log('Invalid token')
         return res.status(401).json({message: "Invalid token format"})
     }
 
@@ -18,7 +21,6 @@ const verify = (req, res, next) => {
         }
 
         req.user = user;
-        console.log(req.user);
         next();
     })
 }
