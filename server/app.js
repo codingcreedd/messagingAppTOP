@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-const allowedOrigins = ['localhost:5173', 'https://whatsuptop.netlify.app'];
+const allowedOrigins = ['localhost:5173', 'https://whatsuptop.netlify.app/'];
 
 //middlewares
 app.use(cors({
