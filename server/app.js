@@ -20,7 +20,11 @@ const allowedOrigins = ['http://localhost:5173', 'https://whatsuptop.netlify.app
 //     credentials: true
 // }));
 
-app.use(cors())
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 // app.use(session({
 //     secret: process.env.SECRET,
