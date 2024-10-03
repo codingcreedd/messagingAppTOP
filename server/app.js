@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-const allowedOrigins = ['http://localhost:5173', 'https://whatsuptop.netlify.app'];
+const allowedOrigins = ['localhost:5173', 'https://whatsuptop.netlify.app'];
 
 //middlewares
 app.use(cors({
@@ -14,13 +14,9 @@ app.use(cors({
 
 
 app.use((req, res, next) => {
-
   res.header('Access-Control-Allow-Origin', allowedOrigins.join(', '));
-
   res.header('Access-Control-Allow-Credentials', true);
-
   next();
-
 });
 
 // app.use(session({

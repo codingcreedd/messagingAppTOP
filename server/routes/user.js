@@ -76,8 +76,9 @@ router.post('/login', async (req, res) => {
     const {email, pw} = req.body;
 
     const existingUser = await prisma.user.findUnique({
-        email
+        where: { email: email }
     });
+    
 
     if(!existingUser) {
         return res.status(403).json({message: 'User not found', status: 'failed'})
