@@ -85,6 +85,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
         })
     } else {
         console.log(req.session.passport)
+        console.log('LOGINSUCCESSFULLLLL')
         return res.status(200).json({
             message: 'Login successful',
             status: 'success'
