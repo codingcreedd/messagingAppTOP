@@ -11,16 +11,7 @@ const Nav = () => {
     const navigate = useNavigate();
 
     const logOut = async () => {
-        try {
-            const response = await user_api.get('/logout');
-            if (response.status === 200) {
-                navigate('/logs/login', {replace: true});
-            } else {
-                console.log('Logout failed');
-            }
-        } catch (err) {
-            console.log(err);
-        }
+        localStorage.removeItem("token");
     }
 
     return (
