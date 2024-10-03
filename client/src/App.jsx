@@ -5,15 +5,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Nav from './components/Nav';
 
 function App() {
-
-  const {authState} = useContext(Context);
-
-  const navigate = useNavigate();
-
-  if(!authState){
-    navigate('/logs/login');
-  }
-
   return (
     <div className='flex h-screen w-full relative'>
       <Nav />

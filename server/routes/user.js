@@ -2,6 +2,7 @@ const router = require('express').Router();
 const {PrismaClient} = require('@prisma/client');
 const passport = require('passport');
 const { validatePassword } = require('../lib/passwordUtils');
+const generateToken = require('../lib/jwtUtils');
 const prisma = new PrismaClient();
 const genPassword = require('../lib/passwordUtils').genPassword;
 const verifyPass = require('../lib/passwordUtils').validatePassword;
@@ -9,8 +10,7 @@ const verify = require('../config/verification').verify;
 
 router.get('/protected', verify, (req, res) => {
     try {
-        delete req.user.hashpassword;
-        delete req.user.salt;
+        console.log(req.user)
         res.status(200).json({
             authenticated: true,
             user: req.user
@@ -72,25 +72,30 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-    console.log('Session --- ', req.session);
-    delete req.user.hashpassword;
-    delete req.user.salt;
-    console.log('USER: ', req.user);
+router.post('/login', async (req, res) => {
+    const {email, pw} = req.body;
 
-    if(!req.session.passport || !req.session.passport.user) {
-        return res.status(401).json({
-            message: 'Login failed',
-            status: 'failure'
-        })
-    } else {
-        console.log(req.session.passport)
-        console.log('LOGINSUCCESSFULLLLL')
-        return res.status(200).json({
-            message: 'Login successful',
-            status: 'success'
-        })
+    const existingUser = await prisma.user.findUnique({
+        email
+    });
+
+    if(!existingUser) {
+        return res.status(403).json({message: 'User not found', status: 'failed'})
     }
+
+    const isValid = verifyPass(pw, existingUser.hashpassword, existingUser.salt);
+    if(!isValid) {
+        return res.status(401).json({message: 'Password Incorrect', status: 'failed'});
+    }
+
+    const token = generateToken(existingUser);
+    res.status(201).json({
+        message: 'Login successful',
+        status: 'success',
+        authenticated: true,
+        token: token
+    })
+
 });
 
 router.get('/logout', (req, res, next) => {

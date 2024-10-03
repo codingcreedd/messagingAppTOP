@@ -2,10 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const sessionStore = require('./prisma/db/index').sessionStore;
 const session = require('express-session');
 const cors = require('cors');
-const passport = require('passport');
 
 const allowedOrigins = ['http://localhost:5173', 'https://whatsuptop.netlify.app'];
 
@@ -23,24 +21,24 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' || false
-    }
-}));
+// app.use(session({
+//     secret: process.env.SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: sessionStore,
+//     cookie: {
+//         maxAge: 7 * 24 * 60 * 60 * 1000,
+//         httpOnly: true,
+//         secure: process.env.NODE_ENV === 'production' || false
+//     }
+// }));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-require('./config/passport')
-app.use(passport.initialize());
-app.use(passport.session());
+// require('./config/passport')
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 //Routes
 const user = require('./routes/user');

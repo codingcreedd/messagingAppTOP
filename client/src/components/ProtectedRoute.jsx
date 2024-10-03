@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children }) => {
     verification();
   }, [])
 
-  return authState ? children : null; 
+  return authState ? children : navigate('/logs/login'); 
 };
 
 export default ProtectedRoute;
