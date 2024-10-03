@@ -10,7 +10,7 @@ const Nav = () => {
     const {userId} = useContext(Context);
     const navigate = useNavigate();
 
-    const logOut = async () => {
+    const logOut = () => {
         localStorage.removeItem("token");
     }
 
