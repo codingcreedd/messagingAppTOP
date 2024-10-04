@@ -18,15 +18,6 @@ const ContextProvider = ({children}) => {
       status: ''
     });
 
-    const [token, setToken] = useState(null);
-
-    useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-        if (storedToken) {
-            setToken(storedToken);
-        }
-    }, []);
-
     const states = {
         authState, setAuthState,
         signUp, setSignUp,
@@ -37,7 +28,6 @@ const ContextProvider = ({children}) => {
         openChat, setOpenChat,
         loading, setLoading,
         popup, setPopUp,
-        token
     }
 
     return (

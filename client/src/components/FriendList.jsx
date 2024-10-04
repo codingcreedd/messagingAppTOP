@@ -9,7 +9,7 @@ const FriendList = ({user_id}) => {
     const [friends, setFriends] = useState([]);
     const {id} = useParams();
     const navigate = useNavigate();
-    const {token} = useContext(Context);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         const fetchFriends = async () => {

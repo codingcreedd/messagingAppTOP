@@ -9,7 +9,9 @@ const Profile = () => {
 
     const {user_id} = useParams();
     const [userInfo, setUserInfo] = useState({});
-    const {loading, setLoading, popup, setPopUp, token} = useContext(Context);
+    const {loading, setLoading, popup, setPopUp} = useContext(Context);
+
+    const token = localStorage.getItem("token");
 
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -125,19 +127,19 @@ const Profile = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-gray-400">Display Name</p>
-                  <p className="text-lg">{userInfo.displayName}</p>
+                  <p className="text-lg">{userInfo?.displayName}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-400">Email</p>
-                  <p className="text-lg">{userInfo.email}</p>
+                  <p className="text-lg">{userInfo?.email}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-400">Join Date</p>
-                  <p className="text-lg">{userInfo.createdAt}</p>
+                  <p className="text-lg">{userInfo?.createdAt}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-400">User ID</p>
-                  <p className="text-lg">{userInfo.id}</p>
+                  <p className="text-lg">{userInfo?.id}</p>
                 </div>
               </div>
             </section>

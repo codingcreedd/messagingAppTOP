@@ -23,7 +23,9 @@ const ChatRoom = () => {
   const [editedMessage, setEditedMessage] = useState('');
   const [displayAddFriends, setDisplayAddFriends] = useState(false);
 
-  const {userId, loading, setLoading, popup, setPopUp, token} = useContext(Context);
+  const {userId, loading, setLoading, popup, setPopUp} = useContext(Context);
+
+  const token = localStorage.getItem("token");
 
   const {id} = useParams();
 
