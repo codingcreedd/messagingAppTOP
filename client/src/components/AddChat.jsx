@@ -15,11 +15,16 @@ export default function AddChat() {
   const [selectedContactId, setSelectedContactId] = useState(0);
 
   const navigate = useNavigate();
-  const {friends, setFriends, userId, loading, setLoading, popup, setPopUp} = useContext(Context);
+  const {friends, setFriends, userId, loading, setLoading, popup, setPopUp, token} = useContext(Context);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
-        await user_api.get(`/${userId}/friends`)
+      console.log("Your token: " + token);
+        await user_api.get(`/${userId}/friends`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
         .then(response => {
             if(response.data.userFriendsInfo){
                 setFriends(response.data.userFriendsInfo.friends);
@@ -41,6 +46,10 @@ export default function AddChat() {
             firstMessage,
             user_id: userId,
             contact_id: selectedContactId
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }).then(response  => {
             setLoading(false);
             setPopUp({render: true, message: response.data.message, status: response.data.status})

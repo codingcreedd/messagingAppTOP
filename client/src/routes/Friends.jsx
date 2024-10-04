@@ -13,7 +13,11 @@ export default function Friends() {
 
     useEffect(() => {
         const fetchUserInfo = async () => {
-            await user_api.get(`/${userId}/friends`)
+            await user_api.get(`/${userId}/friends`, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            })
             .then(response => {
                 if(response.data.userFriendsInfo){
                     setFriends(response.data.userFriendsInfo.friends);
@@ -33,6 +37,10 @@ export default function Friends() {
             await user_api.post('/add-contact', {
                 email: newFriendEmail,
                 currentUserId: userId
+            }, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
             }).then(response => {
                 setLoading(false);
                 navigate(0);

@@ -22,7 +22,11 @@ const Profile = () => {
         const fetchUser = async () => {
            setLoading(true);
            try {
-                await user_api.get(`/${user_id}/user-info`).then(response => {
+                await user_api.get(`/${user_id}/user-info`, {
+                  headers: {
+                    Authorization: `Bearer ${token}`
+                  }
+                }).then(response => {
                     setLoading(false);
                     setUserInfo(response.data.user);
                 })
@@ -42,6 +46,10 @@ const Profile = () => {
                 await user_api.put(`/${user_id}/password`, {
                     password: newPassword,
                     verifyOldPassword: oldPassword
+                }, {
+                  headers: {
+                    Authorization: `Bearer ${token}`
+                  }
                 }).then(response => {
                     setLoading(false);
                     setPopUp({render: true, message: response.data.message, status: response.data});
@@ -74,6 +82,10 @@ const Profile = () => {
         try {
             await user_api.put(`/${user_id}/name`, {
                 displayName: newDisplayName
+            }, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
             }).then(response => {
                 setLoading(false);
                 navigate(0);

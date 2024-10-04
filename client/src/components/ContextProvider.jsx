@@ -1,4 +1,4 @@
-import {createContext, useEffect, useLayoutEffect, useState} from 'react'
+import {createContext, useEffect, useState} from 'react'
 import user_api from '../apis/user'
 
 export const Context = createContext(null);
@@ -18,6 +18,15 @@ const ContextProvider = ({children}) => {
       status: ''
     });
 
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
+
     const states = {
         authState, setAuthState,
         signUp, setSignUp,
@@ -27,14 +36,15 @@ const ContextProvider = ({children}) => {
         friendOf, setFriendOf,
         openChat, setOpenChat,
         loading, setLoading,
-        popup, setPopUp
+        popup, setPopUp,
+        token
     }
 
-  return (
-    <Context.Provider value={states}>
-        {children}
-    </Context.Provider>
-  )
+    return (
+        <Context.Provider value={states}>
+            {children}
+        </Context.Provider>
+    )
 }
 
-export default ContextProvider
+export default ContextProvider;

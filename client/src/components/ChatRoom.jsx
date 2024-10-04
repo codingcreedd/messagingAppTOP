@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import chat_api from '../apis/chats'
 import { Context } from './ContextProvider';
 import message_api from '../apis/messages'
@@ -23,10 +23,9 @@ const ChatRoom = () => {
   const [editedMessage, setEditedMessage] = useState('');
   const [displayAddFriends, setDisplayAddFriends] = useState(false);
 
-  const {userId, loading, setLoading, popup, setPopUp} = useContext(Context);
+  const {userId, loading, setLoading, popup, setPopUp, token} = useContext(Context);
 
   const {id} = useParams();
-  const navigate = useNavigate();
 
   const handleSendMessage = async (e) => {
       e.preventDefault();
@@ -35,6 +34,10 @@ const ChatRoom = () => {
           await message_api.post('/create', {
             description: newMessage,
             chat_id: id
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }).then(response => {
             setLoading(false);
             setNewMessage('');
@@ -80,7 +83,11 @@ const ChatRoom = () => {
   const handleMessageDelete = async (message_id) => {
       setLoading(true);
       try {
-        await message_api.delete(`/${message_id}/delete`).then(response => {setMessageTab(false); setLoading(false); setUpdateChat(!updateChat)})
+        await message_api.delete(`/${message_id}/delete`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then(response => {setMessageTab(false); setLoading(false); setUpdateChat(!updateChat)})
       } catch (err) {
         console.log(err);
       }
@@ -89,7 +96,11 @@ const ChatRoom = () => {
   const handleEdit = async (message_id) => {
     setLoading(true);
     try {
-      await message_api.put(`/${message_id}/update`, {description: editedMessage})
+      await message_api.put(`/${message_id}/update`, {description: editedMessage}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(response => {setSelectEdit(false); setMessageTab(false); setLoading(false); setUpdateChat(!updateChat)}) 
     } catch(err) {
       console.log(err);
@@ -98,7 +109,11 @@ const ChatRoom = () => {
 
   const fetchChat = async () => {
     try {
-      await chat_api.get(`/${id}/chat`, {user_id: userId}).then(response => {
+      await chat_api.get(`/${id}/chat`, {user_id: userId}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(response => {
           if(response.status === 200) {
             console.log('RAN FETCH CHAT')
             // console.log(response.data.chat)

@@ -8,11 +8,11 @@ const ProtectedRoute = ({ children }) => {
   const { authState, setAuthState, setUserId, loading, setLoading } = useContext(Context);
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
   useLayoutEffect(() => {
     const verification = async () => {
       setLoading(true);
-
-      const token = localStorage.getItem("token");
 
       await user_api.get('/protected', {
         headers: {
@@ -35,7 +35,7 @@ const ProtectedRoute = ({ children }) => {
   }, [])
 
   if(loading) {
-    return <Loader />
+    return <Loader description={`This could take some time (free tier)...`}/>
   }
 
   return authState ? children : navigate('/logs/login'); 

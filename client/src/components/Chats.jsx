@@ -14,7 +14,11 @@ const Chats = () => {
 
     useEffect(() => {
         const fetchChats = async () => {
-            const response = await chats_api.get('/');
+            const response = await chats_api.get('/', {
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
+              });
             setChats(response.data.chats);
         };
         fetchChats();

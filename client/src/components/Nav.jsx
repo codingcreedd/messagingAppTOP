@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { navHeaders } from '../tools/nav'
-import { Link, useNavigate } from 'react-router-dom';
-import user_api from '../apis/user';
+import { Link, replace, useNavigate } from 'react-router-dom';
 import { Context } from './ContextProvider';
 
 const Nav = () => {
@@ -12,7 +11,7 @@ const Nav = () => {
 
     const logOut = () => {
         localStorage.removeItem("token");
-        navigate('/logs/login');
+        navigate('/logs/login', {replace: true});
     }
 
     return (
