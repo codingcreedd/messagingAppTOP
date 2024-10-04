@@ -117,8 +117,7 @@ const ChatRoom = () => {
         }
       }).then(response => {
           if(response.status === 200) {
-            console.log('RAN FETCH CHAT')
-            // console.log(response.data.chat)
+            console.log(response.data.chat)
             setChat(chat => ({
               messages: response.data.chat.messages,
               users: response.data.chat.users,
