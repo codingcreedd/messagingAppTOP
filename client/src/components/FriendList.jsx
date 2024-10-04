@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import user_api from '../apis/user';
 import chat_api from '../apis/chats'
 import { useNavigate, useParams } from 'react-router-dom';
+import { Context } from './ContextProvider';
 
 const FriendList = ({user_id}) => {
 
     const [friends, setFriends] = useState([]);
     const {id} = useParams();
     const navigate = useNavigate();
+    const {token} = useContext(Context);
 
     useEffect(() => {
         const fetchFriends = async () => {

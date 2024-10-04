@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 
 export default function Friends() {
 
-    const {friends, setFriends, userId, friendOf, setFriendOf, loading, setLoading} = useContext(Context);
+    const {friends, setFriends, userId, friendOf, setFriendOf, loading, setLoading, token} = useContext(Context);
     const [newFriendEmail, setNewFriendEmail] = useState('');
 
     const navigate = useNavigate();

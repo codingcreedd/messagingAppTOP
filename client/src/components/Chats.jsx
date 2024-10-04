@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Chats = () => {
     const container = useRef();
-    const { chats, setChats, userId } = useContext(Context);
+    const { chats, setChats, userId, token } = useContext(Context);
     const [addChat, setAddChat] = useState(false);
     const navigate = useNavigate();
 

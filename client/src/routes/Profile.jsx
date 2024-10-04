@@ -9,7 +9,7 @@ const Profile = () => {
 
     const {user_id} = useParams();
     const [userInfo, setUserInfo] = useState({});
-    const {loading, setLoading, popup, setPopUp} = useContext(Context);
+    const {loading, setLoading, popup, setPopUp, token} = useContext(Context);
 
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
