@@ -8,7 +8,8 @@ const allowedOrigins = ['localhost:5173/', 'https://whatsuptop.netlify.app/'];
 
 //middlewares
 app.use(cors({
-  origin: true,
+  origin: 'https://whatsuptop.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
 
