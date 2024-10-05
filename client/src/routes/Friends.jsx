@@ -14,6 +14,7 @@ export default function Friends() {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
+    const [messageFriend, setMessageFriend] = useState(false);
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -114,7 +115,7 @@ export default function Friends() {
                     <span className={`text-sm ${friend.isFriend ? 'text-green-400' : 'text-gray-400'}`}>
                       {friendOf?.includes(friend.email) ? 'Friends' : 'Contact'}
                     </span>
-                    <button className="px-4 py-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300">
+                    <button onClick={() => {setMessageFriend(true)}} className="px-4 py-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300">
                       Message
                     </button>
                   </div>

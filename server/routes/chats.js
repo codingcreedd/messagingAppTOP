@@ -143,6 +143,44 @@ router.get('/:id/chat', verify, async (req, res) => {
     }
 });
 
+//get a chat with a specfic friend
+router.get('/:friend_id/get-chats', verify, async (req, res) => {
+    try {
+        const {friend_id} = req.params;
+        const {user_id} = req.user.id;
+
+        const chats = await prisma.chat.findMany({
+            where: {
+                AND: [
+                    {
+                        users: {
+                            some: { id: user_id }
+                        }
+                    },
+                    {
+                        users: {
+                            some: { id: friend_id }
+                        }
+                    }
+                ]
+            }
+        });
+
+        if(!chats) {
+            return res.status(403).json({message: 'Chats not found', status:  'failure'})
+        }
+
+        res.status(200).json({
+            message: 'Chats found',
+            status: 'success',
+            chats: chats
+        });
+
+    } catch(err) {
+        console.log(err);
+    }
+})
+
 router.put('/:chat_id/add-user', verify, async (req, res) => {
     try {
         const {chat_id} = req.params;

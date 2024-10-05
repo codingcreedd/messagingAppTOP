@@ -152,7 +152,6 @@ const ChatRoom = () => {
 
   return (
     <div className="min-h-screen w-[75%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-4 flex flex-col">
-      {loading && <Loader />}
 
       {displayAddFriends && <FriendList user_id={userId} />}
 
@@ -161,6 +160,7 @@ const ChatRoom = () => {
           {chat?.chatContent?.name?.charAt(0)}{chat?.chatContent?.name?.charAt(1)}
         </div>
         <div className="flex-grow">
+        {loading && <Loader description={`Sending`}/>}
           <h1 className="text-2xl font-bold">{chat?.chatContent?.name}</h1>
           <div className="flex items-center space-x-2 text-sm text-gray-300">
             <span>Users:</span>
