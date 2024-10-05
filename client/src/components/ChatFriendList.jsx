@@ -26,7 +26,7 @@ const ChatFriendList = ({friend_id}) => {
     }, [])
 
   return (
-    <div className='flex flex-col justify-center items-center w-full h-[50%] bg-gray-500'>
+    <div className='flex flex-col justify-center items-center w-full h-[50%] bg-gray-500 absolute -bottom-10'>
 
         <h1 className='text-center font-bold text-3xl mb-4 text-sky-900'>Your Friends</h1>
         {

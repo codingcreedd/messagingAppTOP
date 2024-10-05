@@ -3,6 +3,7 @@ import { Context } from '../components/ContextProvider'
 import user_api from '../apis/user'
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
+import ChatFriendList from '../components/ChatFriendList';
 
 export default function Friends() {
 
@@ -88,8 +89,17 @@ export default function Friends() {
               {friends.map((friend) => (
                 <div
                   key={friend.id}
-                  className="bg-gradient-to-br from-[#1a2a3a] to-[#0f1923] rounded-2xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300"
+                  className="relative bg-gradient-to-br from-[#1a2a3a] to-[#0f1923] rounded-2xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
+
+                  {
+                    messageFriend ? (
+                      <ChatFriendList friend_id={friend?.id}/>
+                    ) : (
+                      null
+                    )
+                  }
+                  
                   <div className="flex items-center space-x-4 mb-4">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-[#3a7bd5] to-[#00d2ff]">
                       {friend.profilePicture ? (
