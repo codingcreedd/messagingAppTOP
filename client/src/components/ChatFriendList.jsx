@@ -34,7 +34,7 @@ const ChatFriendList = ({friend_id}) => {
                 <div className='flex flex-col rounded-xl shadow-2xl px-10 py-10 bg-sky-800 max-h-[300px] overflow-scroll'>
                     {
                         chats.map(chat => (
-                            <Chat />
+                            <Chat global={false} isGroupChat={false} name={chat?.name} id={chat?.id} />
                         ))
                     }
                 </div>
