@@ -10,7 +10,14 @@ const LogInForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const {setSignUp, setAuthState, loading, setLoading, popup, setPopUp} = useContext(Context);
+    const {setSignUp, setAuthState} = useContext(Context);
+
+    const [loading, setLoading] = useState(false);
+    const [popup, setPopUp] = useState({
+      render: false,
+      message: '',
+      status: ''
+    });
 
     const navigate = useNavigate();
 

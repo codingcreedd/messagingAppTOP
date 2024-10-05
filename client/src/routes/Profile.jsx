@@ -9,7 +9,13 @@ const Profile = () => {
 
     const {user_id} = useParams();
     const [userInfo, setUserInfo] = useState({});
-    const {loading, setLoading, popup, setPopUp} = useContext(Context);
+    const [popup, setPopUp] = useState({
+      render: false,
+      message: '',
+      status: ''
+    });
+
+    const [loading, setLoading] = useState(false);
 
     const token = localStorage.getItem("token");
 

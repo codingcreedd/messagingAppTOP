@@ -1,14 +1,15 @@
-import { useContext, useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../components/ContextProvider';
 import user_api from '../apis/user'
 import Loader from './Loader';
 
 const ProtectedRoute = ({ children }) => {
-  const { authState, setAuthState, setUserId, loading, setLoading } = useContext(Context);
+  const { authState, setAuthState, setUserId } = useContext(Context);
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
 
   useLayoutEffect(() => {
     const verification = async () => {

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Context } from './ContextProvider';
 import { Link, replace, useNavigate } from 'react-router-dom';
 import user_api from '../apis/user'
+import Loader from './Loader';
 
 const SignUpForm = () => {
 
@@ -11,15 +12,18 @@ const SignUpForm = () => {
 
     const {setSignUp} = useContext(Context);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             await user_api.post('/signup', {
                 pw: password,
                 displayName: displayName,
                 email: email
             }).then(response => {
+              setLoading(false);
                 navigate('/logs/login', {replace: true});
             })
         } catch(err) {
@@ -29,6 +33,9 @@ const SignUpForm = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-950">
+          {
+            loading && <Loader />
+          }
           <div className="bg-gray-900 p-8 rounded-lg shadow-xl w-full max-w-md">
             <h2 className="text-3xl font-bold mb-6 text-center text-gray-100">Sign Up</h2>
             <form className="space-y-6">

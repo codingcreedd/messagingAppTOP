@@ -6,12 +6,14 @@ import Loader from '../components/Loader';
 
 export default function Friends() {
 
-    const {friends, setFriends, userId, friendOf, setFriendOf, loading, setLoading} = useContext(Context);
+    const {friends, setFriends, userId, friendOf, setFriendOf} = useContext(Context);
     const [newFriendEmail, setNewFriendEmail] = useState('');
 
     const token = localStorage.getItem("token");
 
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchUserInfo = async () => {

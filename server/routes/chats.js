@@ -95,7 +95,6 @@ router.post('/add', verify,  async (req, res) => {
 router.get('/:id/chat', verify, async (req, res) => {
     const {id} = req.params;
     const user_id = req.user.id;
-    console.log("This is ur user id: " + user_id)
     try {
         const chat = await prisma.chat.findUnique({
             where: {id: Number(id)},

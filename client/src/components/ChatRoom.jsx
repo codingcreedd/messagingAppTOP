@@ -23,7 +23,9 @@ const ChatRoom = () => {
   const [editedMessage, setEditedMessage] = useState('');
   const [displayAddFriends, setDisplayAddFriends] = useState(false);
 
-  const {userId, loading, setLoading} = useContext(Context);
+  const {userId} = useContext(Context);
+
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -117,26 +119,27 @@ const ChatRoom = () => {
   const fetchChat = async () => {
     setLoading(true);
     try {
-      const response = await chat_api.get(`/${id}/chat`, {
+      await chat_api.get(`/${id}/chat`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      });
+      }).then(response => {
+        if (response.status === 200) {
+          setChat({
+            messages: response.data.chat.messages,
+            users: response.data.chat.users,
+            chatContent: {
+              id: response.data.chat.id,
+              name: response.data.chat.name,
+              createdAt: response.data.chat.createdAt,
+              updatedAt: response.data.chat.updatedAt,
+              isgroupchat: response.data.chat.isgroupchat
+            }
+          });
+          setLoading(false);
+        }
+      })
 
-      if (response.status === 200) {
-        setChat({
-          messages: response.data.chat.messages,
-          users: response.data.chat.users,
-          chatContent: {
-            id: response.data.chat.id,
-            name: response.data.chat.name,
-            createdAt: response.data.chat.createdAt,
-            updatedAt: response.data.chat.updatedAt,
-            isgroupchat: response.data.chat.isgroupchat
-          }
-        });
-        setLoading(false);
-      }
     } catch (err) {
       console.log(err);
       setLoading(false);

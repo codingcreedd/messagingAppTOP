@@ -15,7 +15,14 @@ export default function AddChat() {
   const [selectedContactId, setSelectedContactId] = useState(0);
 
   const navigate = useNavigate();
-  const {friends, setFriends, userId, loading, setLoading, popup, setPopUp} = useContext(Context);
+  const {friends, setFriends, userId} = useContext(Context);
+
+  const [loading, setLoading] = useState(false);
+  const [popup, setPopUp] = useState({
+    render: false,
+    message: '',
+    status: ''
+  });
 
   const token = localStorage.getItem("token");
 
