@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import chat_api from '../apis/chats'
+import Chat from './Chat'
 
 const ChatFriendList = ({friend_id}) => {
 
     const [chats, setChats] = useState(false);
 
     const token = localStorage.getItem("token");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchChats = async () => {
+            setLoading(true);
             await chat_api.get(`/${friend_id}/get-chats`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
+            }).then(response => {
+                setLoading(false);
+                setChats(response.data.chats);
             })
         }
 
@@ -21,15 +27,14 @@ const ChatFriendList = ({friend_id}) => {
 
   return (
     <div className='flex flex-col justify-center items-center w-full h-[50%] bg-gray-500'>
+
         <h1 className='text-center font-bold text-3xl mb-4 text-sky-900'>Your Friends</h1>
         {
-            friends.length >= 1 ? (
+            chats?.length >= 1 ? (
                 <div className='flex flex-col rounded-xl shadow-2xl px-10 py-10 bg-sky-800 max-h-[300px] overflow-scroll'>
                     {
-                        friends.map(friend => (
-                            <div onClick={() => {addUser(friend.id)}} key={friend?.id} className='border border-white px-10 py-2 rounded-xl mb-2 cursor-pointer'>
-                                {friend.displayName}
-                            </div>
+                        chats.map(chat => (
+                            <Chat />
                         ))
                     }
                 </div>

@@ -147,7 +147,7 @@ router.get('/:id/chat', verify, async (req, res) => {
 router.get('/:friend_id/get-chats', verify, async (req, res) => {
     try {
         const {friend_id} = req.params;
-        const {user_id} = req.user.id;
+        const user_id = req.user.id;
 
         const chats = await prisma.chat.findMany({
             where: {
@@ -159,7 +159,7 @@ router.get('/:friend_id/get-chats', verify, async (req, res) => {
                     },
                     {
                         users: {
-                            some: { id: friend_id }
+                            some: { id: Number(friend_id) }
                         }
                     }
                 ]
