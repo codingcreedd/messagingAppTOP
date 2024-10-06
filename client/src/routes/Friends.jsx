@@ -15,6 +15,7 @@ export default function Friends() {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -55,6 +56,10 @@ export default function Friends() {
         }
     }
 
+    const cancelMessageFriend = () => {
+      setMessageFriend(false);
+    }
+
     return (
         <div className="min-h-screen w-[82%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-8">
           {
@@ -86,15 +91,15 @@ export default function Friends() {
     
             {/* Friends List */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {friends.map((friend) => (
+              {friends.map((friend, index) => (
                 <div
                   key={friend.id}
                   className="relative bg-gradient-to-br from-[#1a2a3a] to-[#0f1923] rounded-2xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
 
                   {
-                    messageFriend ? (
-                      <ChatFriendList friend_id={friend?.id}/>
+                    messageFriend && selectedIndex === index ? (
+                      <ChatFriendList friend_id={friend?.id} onClick_={cancelMessageFriend}/>
                     ) : (
                       null
                     )
@@ -124,7 +129,7 @@ export default function Friends() {
                     <span className={`text-sm ${friend.isFriend ? 'text-green-400' : 'text-gray-400'}`}>
                       {friendOf?.includes(friend.email) ? 'Friends' : 'Contact'}
                     </span>
-                    <button onClick={() => {setMessageFriend(true)}} className="px-4 py-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300">
+                    <button onClick={() => {setMessageFriend(true); setSelectedIndex(index)}} className="px-4 py-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300">
                       Message
                     </button>
                   </div>

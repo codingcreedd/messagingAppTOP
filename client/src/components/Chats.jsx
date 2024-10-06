@@ -36,10 +36,14 @@ const Chats = () => {
         }
     }, [addChat]);
 
+    const handleCancelAddChat = () => {
+        setAddChat(false);
+    }
+
     return (
         <div className='flex flex-col w-[25%] bg-[#11171f] py-10' ref={container}>
             <div className={`chatContainer absolute inset-0 hidden`}>
-                {addChat && <AddChat />}
+                {addChat && <AddChat onClick_={handleCancelAddChat} />}
             </div>
 
             <h1 className='text-white text-xl font-bold mb-10 mx-12'>Messages</h1>

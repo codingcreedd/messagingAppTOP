@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
 import PopUpMessage from './PopUpMessage'
 
-export default function AddChat() {
+export default function AddChat({onClick_}) {
   const [name, setName] = useState('')
   const [isGroupChat, setIsGroupChat] = useState(false)
   const [selectedContacts, setSelectedContacts] = useState([])
@@ -144,12 +144,17 @@ export default function AddChat() {
           ></textarea>
         </div>
 
-        <button
-          type="submit"
-          className="w-full py-3 px-4 bg-white text-[#11171f] rounded-md font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1c2531] transition-all duration-300 transform hover:scale-105"
-        >
-          Start Chat
-        </button>
+        <div className='flex items-center w-full'>
+          <button onClick={onClick_} className='w-[50%] py-3 px-4 bg-red-600 text-white text-[#11171f] rounded-md font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1c2531] transition-all duration-300 transform hover:scale-105'>
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="w-[50%] py-3 px-4 bg-white text-[#11171f] rounded-md font-semibold hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#1c2531] transition-all duration-300 transform hover:scale-105"
+          >
+            Start Chat
+          </button>
+        </div>
       </form>
     </div>
   )
