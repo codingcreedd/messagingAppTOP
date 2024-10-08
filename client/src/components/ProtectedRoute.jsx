@@ -1,5 +1,5 @@
 import { useContext, useLayoutEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Context } from '../components/ContextProvider';
 import user_api from '../apis/user'
 import Loader from './Loader';
@@ -39,7 +39,7 @@ const ProtectedRoute = ({ children }) => {
     return <Loader description={`This could take some time (free tier)...`}/>
   }
 
-  return authState ? children : navigate('/logs/login'); 
+  return authState ? children : <Navigate to="/logs/login" replace />; 
 };
 
 export default ProtectedRoute;

@@ -173,7 +173,7 @@ const ChatRoom = () => {
             {chat?.users?.length > 6 && <span>...</span>}
           </div>
         </div>
-        {chat?.chatContent?.isgroupchat && (
+        {(chat?.chatContent?.isgroupchat && chat?.chatContent.name !== 'Global Chat') && (
           <button className='px-10 py-2 bg-gradient-to-r from-sky-600 to-sky-300 rounded-lg font-bold text-sm' onClick={() => setDisplayAddFriends(true)}>
             Add User
           </button>
