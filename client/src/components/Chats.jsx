@@ -33,6 +33,8 @@ const Chats = () => {
                 { x: -screen.width * 2, opacity: 0, display: "hidden"}, 
                 { x: 0, opacity: 1, duration: 0.5, ease: "back.inOut", display: "block" } 
             );
+        } else {
+            gsap.to('.chatContainer', {x: -screen.width * 2, opacity: 0, display: 'hidden'})
         }
     }, [addChat]);
 
@@ -42,7 +44,7 @@ const Chats = () => {
 
     return (
         <div className='flex flex-col w-[25%] bg-[#11171f] py-10' ref={container}>
-            <div className={`chatContainer absolute inset-0 hidden`}>
+            <div className={`chatContainer absolute inset-0 ${!addChat && 'hidden'}`}>
                 {addChat && <AddChat onClick_={handleCancelAddChat} />}
             </div>
 
