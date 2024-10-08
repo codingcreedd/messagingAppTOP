@@ -6,7 +6,6 @@ import Loader from './Loader';
 
 const ProtectedRoute = ({ children }) => {
   const { authState, setAuthState, setUserId } = useContext(Context);
-  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
@@ -38,7 +37,9 @@ const ProtectedRoute = ({ children }) => {
     return <Loader description={`This could take some time (free tier)...`}/>
   }
 
-  return authState ? children : <Navigate to="/logs/login" replace />; 
+  if(!loading) {
+    return authState ? children : <Navigate to="/logs/login" replace />; 
+  }
 };
 
 export default ProtectedRoute;
