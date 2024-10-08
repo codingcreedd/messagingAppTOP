@@ -22,6 +22,7 @@ const ChatRoom = () => {
   const [updateChat, setUpdateChat] = useState(false);
   const [editedMessage, setEditedMessage] = useState('');
   const [displayAddFriends, setDisplayAddFriends] = useState(false);
+  const [loadingChatRoom, setLoadingChatRoom] = useState(false);
 
   const {userId} = useContext(Context);
 
@@ -117,7 +118,7 @@ const ChatRoom = () => {
   }
 
   const fetchChat = async () => {
-    setLoading(true);
+    setLoadingChatRoom(true);
     try {
       await chat_api.get(`/${id}/chat`, {
         headers: {
@@ -136,7 +137,7 @@ const ChatRoom = () => {
               isgroupchat: response.data.chat.isgroupchat
             }
           });
-          setLoading(false);
+          setLoadingChatRoom(false);
         }
       })
 
@@ -152,7 +153,9 @@ const ChatRoom = () => {
 
   return (
     <div className="min-h-screen w-[75%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-4 flex flex-col">
-
+      {
+        loadingChatRoom && <Loader description={`Loading Chat`} />
+      }
       {displayAddFriends && <FriendList user_id={userId} />}
 
       <div className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-4 rounded-t-2xl flex items-center space-x-4">
@@ -204,7 +207,7 @@ const ChatRoom = () => {
                 </form>
               ) : (
                 <div className='flex flex-col'>
-                  {message.userId !== userId && <p className='text-[0.7rem] text-sky-600'>Sent by {message.userId}</p>}
+                  {message.userId !== userId && <p className='text-[0.7rem] text-sky-600'>{message.user.displayName}</p>}
                   <div className='flex items-center'>
                     <p>{message.description}</p>
                     <p className='ml-6 text-[0.7rem]'>{formatTime(message.createdAt)}</p>

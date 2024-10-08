@@ -103,6 +103,9 @@ router.get('/:id/chat', verify, async (req, res) => {
                 messages: {
                     orderBy: {
                         createdAt: 'asc'
+                    },
+                    include: {
+                        user: true
                     }
                 }
             }

@@ -47,10 +47,10 @@ const Chats = () => {
             </div>
 
             <h1 className='text-white text-xl font-bold mb-10 mx-12'>Messages</h1>
-            <div className='flex gap-8 bg-[#1e1f26] pl-5 pr-10 py-2 mx-12 rounded-lg items-center overflow-hidden'>
+            {/* <div className='flex gap-8 bg-[#1e1f26] pl-5 pr-10 py-2 mx-12 rounded-lg items-center overflow-hidden'>
                 <i className='bx bx-search-alt-2 text-white'></i>
                 <input type="text" placeholder='Search' className='bg-transparent text-white placeholder:text-white outline-none' />
-            </div>
+            </div> */}
             
             <Chat icon="bx bx-globe text-[3rem] text-white" global={true} name="Global Chat" isGroupChat={TextTrackCueList} id={1} />
 
@@ -59,12 +59,12 @@ const Chats = () => {
                 <p onClick={() => { setAddChat(true); navigate('/', {replace: true}) }}>Add Chat</p>
             </div>
 
-            <div className='flex flex-col mt-10 overflow-auto'>
+            <div className='flex flex-col mt-10 gap-5 overflow-auto'>
                 { (chats && chats.length > 0) ? (
                     chats.map(chat => (
                         <div key={chat?.id}>
                             <Chat name={chat?.name} isGroupChat={chat?.isgroupchat} id={chat?.id}/>
-                            <hr className='mt-3 mb-3 mx-10'/>
+                            {/* <hr className='mt-3 mb-3 mx-10'/> */}
                         </div>
                     ))
                 ) : (
