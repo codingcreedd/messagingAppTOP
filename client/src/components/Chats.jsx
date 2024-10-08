@@ -58,7 +58,7 @@ const Chats = () => {
                 <input type="text" placeholder='Search' className='bg-transparent text-white placeholder:text-white outline-none' />
             </div> */}
             
-            <Chat icon="bx bx-globe text-[3rem] text-white" global={true} name="Global Chat" isGroupChat={TextTrackCueList} id={1} />
+            <Chat icon="bx bx-globe text-[3rem] text-white" global={true} name="Global Chat" isGroupChat={TextTrackCueList} id={1} onClick_={handleHideChat} />
 
             <div className='flex items-center gap-5 text-white mt-10 mx-12 cursor-pointer'>
                 <div className='text-xl'><i className='bx bx-plus'></i></div>
