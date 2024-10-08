@@ -53,7 +53,6 @@ export default function AddChat({onClick_}) {
             name,
             isGroupChat,
             firstMessage,
-            user_id: userId,
             contact_id: selectedContactId
         }, {
           headers: {

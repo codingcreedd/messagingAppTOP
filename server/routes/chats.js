@@ -44,7 +44,8 @@ router.get('/', verify,  async (req, res) => {
 });
 
 router.post('/add', verify,  async (req, res) => {
-    const { name, isGroupChat, firstMessage, user_id, contact_id } = req.body;
+    const { name, isGroupChat, firstMessage, contact_id } = req.body;
+    const user_id = req.user.id;
     
     try {
       const chat = await prisma.chat.create({
