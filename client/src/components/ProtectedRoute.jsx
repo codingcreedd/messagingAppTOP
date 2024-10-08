@@ -26,7 +26,6 @@ const ProtectedRoute = ({ children }) => {
           setAuthState(true);
           setUserId(response.data.user.id);
         } else {
-          navigate('/logs/login', { replace: true }); 
           setAuthState(false);
         }
       })
