@@ -1,5 +1,5 @@
 import { useContext, useLayoutEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../components/ContextProvider';
 import user_api from '../apis/user'
 import Loader from './Loader';
@@ -9,6 +9,7 @@ const ProtectedRoute = ({ children }) => {
 
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
   useLayoutEffect(() => {
     const verification = async () => {
@@ -31,15 +32,13 @@ const ProtectedRoute = ({ children }) => {
     }
 
     verification();
-  }, [])
+  }, [location])
 
   if(loading) {
     return <Loader description={`This could take some time (free tier)...`}/>
   }
 
-  if(!loading) {
-    return authState ? children : <Navigate to="/logs/login" replace />; 
-  }
+  return authState ? children : <Navigate to="/logs/login" replace={true} />; 
 };
 
 export default ProtectedRoute;
