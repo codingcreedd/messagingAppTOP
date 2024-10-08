@@ -6,6 +6,10 @@ body{
     font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
+.z-class {
+  z-index: 100;
+}
+
 @keyframes spin {
     from {
       transform: rotate(0deg);

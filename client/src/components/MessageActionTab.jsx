@@ -1,4 +1,4 @@
-export default function MessageActionTab({ onEdit, onDelete }){
+export default function MessageActionTab({ onEdit, onDelete, cancel }){
   return (
     <div className="absolute bottom-0 -right-full z-10 transform flex space-x-1 bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-1 rounded-r-lg shadow-lg">
       <button
@@ -13,6 +13,13 @@ export default function MessageActionTab({ onEdit, onDelete }){
       >
         Delete
       </button>
+      <button
+        onClick={cancel}
+        className="px-2 py-1 text-xs font-medium text-white bg-gradient-to-r from-[#5f5e5e] to-[#383636] rounded transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#ff0000] focus:ring-opacity-50"
+      >
+        Cancel
+      </button>
+
     </div>
   )
 }

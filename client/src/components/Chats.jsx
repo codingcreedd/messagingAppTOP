@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Chats = () => {
     const container = useRef();
-    const { chats, setChats, userId } = useContext(Context);
+    const { chats, setChats, userId, hideChatPage, setHideChatPage } = useContext(Context);
     const [addChat, setAddChat] = useState(false);
     const navigate = useNavigate();
 
@@ -42,13 +42,17 @@ const Chats = () => {
         setAddChat(false);
     }
 
+    const handleHideChat = () => {
+        setHideChatPage(!hideChatPage);
+    }
+
     return (
-        <div className='flex flex-col w-[25%] bg-[#11171f] py-10' ref={container}>
+        <div className={`flex flex-col w-[25%] bg-[#11171f] py-10 max-md:w-full ${hideChatPage && 'max-md:hidden'}`} ref={container}>
             <div className={`chatContainer absolute inset-0 ${!addChat && 'hidden'}`}>
                 {addChat && <AddChat onClick_={handleCancelAddChat} />}
             </div>
 
-            <h1 className='text-white text-xl font-bold mb-10 mx-12'>Messages</h1>
+            <h1 className='text-white text-xl font-bold mb-10 mx-12'>Whats Up</h1>
             {/* <div className='flex gap-8 bg-[#1e1f26] pl-5 pr-10 py-2 mx-12 rounded-lg items-center overflow-hidden'>
                 <i className='bx bx-search-alt-2 text-white'></i>
                 <input type="text" placeholder='Search' className='bg-transparent text-white placeholder:text-white outline-none' />
@@ -65,7 +69,7 @@ const Chats = () => {
                 { (chats && chats.length > 0) ? (
                     chats.map(chat => (
                         <div key={chat?.id}>
-                            <Chat name={chat?.name} isGroupChat={chat?.isgroupchat} id={chat?.id}/>
+                            <Chat name={chat?.name} isGroupChat={chat?.isgroupchat} id={chat?.id} onClick_={handleHideChat}/>
                             {/* <hr className='mt-3 mb-3 mx-10'/> */}
                         </div>
                     ))

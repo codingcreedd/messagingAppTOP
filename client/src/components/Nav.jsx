@@ -6,7 +6,7 @@ import { Context } from './ContextProvider';
 const Nav = () => {
 
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const {userId} = useContext(Context);
+    const {userId, hideChatPage, setHideChatPage} = useContext(Context);
     const navigate = useNavigate();
 
     const logOut = () => {
@@ -15,30 +15,30 @@ const Nav = () => {
     }
 
     return (
-        <div className='flex flex-col pb-10 bg-[#2b2b2c] w-[18%] h-screen'>
+        <div className='flex max-md:justify-between md:flex-col md:pb-10 bg-[#2b2b2c] md:w-[18%] max-md:px-3 max-md:py-1 md:h-screen max-md:w-full max-md:items-center max-md:text-sm'>
             <div>
-                <img src="" alt="" />
-                <h1 className='text-sky-600 px-10 py-10 font-bold text-xl'>WD</h1>
+            <Link to={`/${userId}/profile`} className='px-5 rounded-xl max-md:rounded-lg text-white py-2 bg-gradient-to-r from-sky-600 to-sky-800 max-md:text-sm max-md:py-1 max-md:px-3'>Profile</Link>
+
             </div>
 
-            <div className='flex flex-col gap-5 text-white'>
+            <div className='flex md:flex-col gap-5 text-white'>
                 {
                     navHeaders.map((header, index) => (
                         <div 
                             key={header.index}
-                            className={`flex gap-5 items-center py-3 cursor-pointer ${selectedIndex === index && 'border-r-[0.3rem]'} rounded-sm border-r-sky-600 w-full`}
-                            onClick={() => {setSelectedIndex(index); navigate(`${header?.path}`)}}
+                            className={`flex max-md:flex-col gap-2 md:px-10 max-md:gap-1 items-center max-md:justify-center py-3 cursor-pointer ${selectedIndex === index && 'md:border-r-[0.3rem]'} rounded-sm border-r-sky-600 md:w-full`}
+                            onClick={() => {setSelectedIndex(index); if(header?.title){setHideChatPage(false)} navigate(`${header?.path}`)}}
                         >
-                            <i className={`${header.iconClass} text-xl pl-10`}></i>
-                            <p className={`${selectedIndex === index ? 'text-sky-600 font-bold' : ''}`}>{header.title}</p>
+                            <i className={`${header.iconClass} text-xl`}></i>
+                            <p className={`${selectedIndex === index ? 'text-sky-600 font-bold' : ''} max-md:text-center`}>{header.title}</p>
                         </div>
                     ))
                 }
             </div>
 
-            <div className='flex items-center gap-10 text-white mt-auto px-10'>
-                <Link to={`/${userId}/profile`} className='px-5 rounded-xl py-2 bg-gradient-to-r from-sky-600 to-sky-800'>Profile</Link>
-                <button onClick={logOut} className='px-10 py-2 bg-gradient-to-r from-sky-600 to-sky-800 rounded-xl'>Logout</button>
+
+            <div className='flex max-md:flex-col items-center gap-10 max-md:gap-3 text-white md:mt-auto px-10 max-md:px-3'>
+                <button onClick={logOut} className='px-5 py-2 bg-gradient-to-r from-sky-600 to-sky-800 rounded-xl max-md:rounded-lg max-md:text-sm max-md:py-1 max-md:px-3'>Logout</button>
             </div>
 
         </div>

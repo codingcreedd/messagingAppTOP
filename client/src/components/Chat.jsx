@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Chat = ({icon, global, name, isGroupChat, id}) => {
+const Chat = ({icon, global, name, isGroupChat, id, onClick_}) => {
 
     const navigate = useNavigate();
 
   return (
-    <Link to={`/${id}/chat`} className={`mx-3 flex gap-5 items-center px-10 py-2 ${global && 'mt-10 bg-[#17304e] rounded-xl'} cursor-pointer`}>
+    <Link to={`/${id}/chat`} onClick={onClick_} className={`mx-3 flex gap-5 items-center px-10 py-2 ${global && 'mt-10 bg-[#17304e] rounded-xl'} cursor-pointer`}>
         <div>
             {
                 icon ? (

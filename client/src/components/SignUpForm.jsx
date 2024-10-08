@@ -32,12 +32,12 @@ const SignUpForm = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-950">
+        <div className="min-h-screen flex items-center justify-center bg-gray-950 max-md:text-sm">
           {
             loading && <Loader />
           }
-          <div className="bg-gray-900 p-8 rounded-lg shadow-xl w-full max-w-md">
-            <h2 className="text-3xl font-bold mb-6 text-center text-gray-100">Sign Up</h2>
+          <div className="bg-gray-900 p-8 rounded-lg shadow-xl w-full max-w-md max-md:w-[80%]">
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-100 max-md:text-2xl max-md:mb-4">Sign Up</h2>
             <form className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300">

@@ -16,7 +16,6 @@ const ChatRoom = () => {
     messages: []
   });
 
-  const [messageTab, setMessageTab] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [selectEdit, setSelectEdit] = useState(false);
   const [updateChat, setUpdateChat] = useState(false);
@@ -24,7 +23,7 @@ const ChatRoom = () => {
   const [displayAddFriends, setDisplayAddFriends] = useState(false);
   const [loadingChatRoom, setLoadingChatRoom] = useState(false);
 
-  const {userId} = useContext(Context);
+  const {userId, hideChatPage, setHideChatPage, messageTab, setMessageTab} = useContext(Context);
 
   const [loading, setLoading] = useState(false);
 
@@ -151,31 +150,39 @@ const ChatRoom = () => {
     fetchChat();
   }, [id, updateChat]);
 
+  if(loadingChatRoom) {
+    return (
+          <div className='flex items-center justify-center w-full h-screen bg-gradient-to-br from-[#0f1923] to-[#1c2831]'>
+            <Loader description={`Loading Chat`}/>
+          </div>
+      )
+  }
+
   return (
-    <div className="min-h-screen w-[75%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-4 flex flex-col">
+    <div className={`${!hideChatPage && 'max-md:hidden'} max-md:w-full w-[75%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-4 max-md:p-2 flex flex-col`}>
       {
         loadingChatRoom && <Loader description={`Loading Chat`} />
       }
       {displayAddFriends && <FriendList user_id={userId} />}
 
-      <div className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-4 rounded-t-2xl flex items-center space-x-4">
-        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#3a7bd5] to-[#00d2ff] flex items-center justify-center text-2xl font-bold">
+      <div className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-4 max-md:p-2 rounded-t-2xl flex items-center space-x-4">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#3a7bd5] to-[#00d2ff] flex items-center justify-center text-2xl max-md:text-lg font-bold">
           {chat?.chatContent?.name?.charAt(0)}{chat?.chatContent?.name?.charAt(1)}
         </div>
         <div className="flex-grow">
         {loading && <Loader description={`Sending`}/>}
-          <h1 className="text-2xl font-bold">{chat?.chatContent?.name}</h1>
+          <h1 className="text-2xl max-md:text-lg font-bold">{chat?.chatContent?.name}</h1>
           <div className="flex items-center space-x-2 text-sm text-gray-300">
-            <span>Users:</span>
-            {chat?.users && chat?.users?.slice(0, 6).map((user, index) => (
-              <span key={user.id}>{user.displayName}{index >= chat?.users.length - 1 ? '' : ','}</span>
+            {chat?.users && chat?.users?.slice(0, 3).map((user, index) => (
+              <span key={user.id} className='text-sm whitespace-nowrap'>{user.displayName}{index >= chat?.users.length - 1 ? '' : ','}</span>
             ))}
-            {chat?.users?.length > 6 && <span>...</span>}
+            {chat?.users?.length > 3 && <span>...</span>}
           </div>
         </div>
+        <i className='bx bx-arrow-back md:hidden cursor-pointer' onClick={() => {setHideChatPage(!hideChatPage)}}></i>
         {(chat?.chatContent?.isgroupchat && chat?.chatContent.name !== 'Global Chat') && (
-          <button className='px-10 py-2 bg-gradient-to-r from-sky-600 to-sky-300 rounded-lg font-bold text-sm' onClick={() => setDisplayAddFriends(true)}>
-            Add User
+          <button className='px-10 py-2 max-md:px-3 max-md:py-1 bg-gradient-to-r from-sky-600 to-sky-300 rounded-lg font-bold text-sm' onClick={() => setDisplayAddFriends(true)}>
+            +
           </button>
         )}
       </div>
@@ -186,11 +193,11 @@ const ChatRoom = () => {
           <div
             key={message.id}
             onClick={(e) => handleMessageOptions(message.userId, index, message.description, e)}
-            className={`relative flex ${message.userId === userId ? 'justify-end' : 'justify-start'} cursor-pointer`}
+            className={`relative flex ${message.userId === userId ? 'justify-end' : 'justify-start'} cursor-pointer max-md:text-sm`}
           >
             {(messageTab && selectedIndex === index) && (
               <div className='absolute -bottom-10 right-50'>
-                <MessageActionTab onEdit={(e) => { setSelectEdit(true); e.stopPropagation(); }} onDelete={() => handleMessageDelete(message.id)} />
+                <MessageActionTab onEdit={(e) => { setSelectEdit(true); e.stopPropagation(); }} onDelete={() => handleMessageDelete(message.id)} cancel={() => {setMessageTab(false)}} />
               </div>
             )}
             <div className={`max-w-[70%] p-3 rounded-2xl ${message.userId === userId ? 'bg-gradient-to-r from-[#3a7bd5] to-[#0384a1] text-white' : 'bg-gradient-to-r from-[#2a3f55] to-[#1c2831] text-gray-200'}`}>
@@ -226,6 +233,7 @@ const ChatRoom = () => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
+          required
           className="flex-grow px-4 py-2 bg-[#0f1923] border border-[#3a7bd5] rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
         />
         <button

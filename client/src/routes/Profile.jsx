@@ -117,42 +117,42 @@ const Profile = () => {
             {/* Header */}
             <header className="text-center">
               <div className='flex items-center gap-3 justify-center'>
-                    <Link to={`/`} className='px-10 py-2 bg-gradient-to-r from-sky-600 to-sky-800 rounded-xl'>BACK</Link>
-                    <h1 className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff]">
+                    <Link to={`/`} className='px-10 py-2 bg-gradient-to-r from-sky-600 to-sky-800 rounded-xl max-md:lg max-md:px-5 max-md:text-sm'>BACK</Link>
+                    <h1 className="text-4xl max-md:text-2xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff]">
                         Profile Settings
                     </h1>
               </div>
-              <p className="text-gray-400">
+              <p className="text-gray-400 max-md:mt-3">
                 View your account information and change your password
               </p>
             </header>
     
             {/* User Information */}
             <section className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-6 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-semibold mb-4">User Information</h2>
+              <h2 className="text-2xl font-semibold mb-4 max-md:mb-3 max-md:text-xl">User Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-gray-400">Display Name</p>
-                  <p className="text-lg">{userInfo?.displayName}</p>
+                  <p className="text-lg max-md:text-sm">{userInfo?.displayName}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-400">Email</p>
-                  <p className="text-lg">{userInfo?.email}</p>
+                  <p className="text-lg max-md:text-sm">{userInfo?.email}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-400">Join Date</p>
-                  <p className="text-lg">{userInfo?.createdAt}</p>
+                  <p className="text-lg max-md:text-sm">{userInfo?.createdAt}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-400">User ID</p>
-                  <p className="text-lg">{userInfo?.id}</p>
+                  <p className="text-lg max-md:text-sm">{userInfo?.id}</p>
                 </div>
               </div>
             </section>
 
             {/*Display Name Change Form*/}
             <section className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-6 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-semibold mb-4">Change Display Name</h2>
+              <h2 className="text-2xl max-md:text-xl font-semibold mb-4">Change Display Name</h2>
               <form onSubmit={handleNameChange} className="space-y-4">
                 <div>
                   <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-400 mb-1">
@@ -163,13 +163,13 @@ const Profile = () => {
                     id="newdisplayname"
                     value={newDisplayName}
                     onChange={(e) => setNewDisplayName(e.target.value)}
-                    className="w-full px-4 py-2 rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
+                    className="w-full px-4 py-2 max-md:text-sm rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
                     required
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2 px-4 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-md font-semibold hover:from-[#00d2ff] hover:to-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] focus:ring-offset-2 focus:ring-offset-[#1c2831] transition-all duration-300"
+                  className="w-full py-2 px-4 max-md:text-sm bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-md font-semibold hover:from-[#00d2ff] hover:to-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] focus:ring-offset-2 focus:ring-offset-[#1c2831] transition-all duration-300"
                 >
                   Change Display Name
                 </button>
@@ -179,7 +179,7 @@ const Profile = () => {
     
             {/* Password Change Form */}
             <section className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-6 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-semibold mb-4">Change Password</h2>
+              <h2 className="text-2xl font-semibold mb-4 max-md:mb-3 max-md:text-xl">Change Password</h2>
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 <div>
                   <label htmlFor="oldPassword" className="block text-sm font-medium text-gray-400 mb-1">
@@ -190,7 +190,7 @@ const Profile = () => {
                     id="oldPassword"
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
-                    className="w-full px-4 py-2 rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
+                    className="w-full px-4 py-2 max-md:text-sm rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
                     required
                   />
                 </div>
@@ -203,7 +203,7 @@ const Profile = () => {
                     id="newPassword"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full px-4 py-2 rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
+                    className="w-full px-4 py-2 max-md:text-sm rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
                     required
                   />
                 </div>
@@ -216,13 +216,13 @@ const Profile = () => {
                     id="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full px-4 py-2 rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
+                    className="w-full px-4 py-2 max-md:text-sm rounded-md bg-[#2a3441] border border-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
                     required
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2 px-4 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-md font-semibold hover:from-[#00d2ff] hover:to-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] focus:ring-offset-2 focus:ring-offset-[#1c2831] transition-all duration-300"
+                  className="w-full py-2 px-4 max-md:text-sm bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-md font-semibold hover:from-[#00d2ff] hover:to-[#3a7bd5] focus:outline-none focus:ring-2 focus:ring-[#00d2ff] focus:ring-offset-2 focus:ring-offset-[#1c2831] transition-all duration-300"
                 >
                   Change Password
                 </button>

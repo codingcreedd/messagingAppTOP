@@ -6,7 +6,7 @@ import Nav from './components/Nav';
 
 function App() {
   return (
-    <div className='flex h-screen w-full relative'>
+    <div className='flex h-screen w-full relative max-md:flex-col'>
       <Nav />
       <Outlet />
     </div>

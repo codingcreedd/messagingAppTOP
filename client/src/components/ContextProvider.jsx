@@ -12,6 +12,8 @@ const ContextProvider = ({children}) => {
     const [friendOf, setFriendOf] = useState([]);
     const [openChat, setOpenChat] = useState(false);
     const [messageFriend, setMessageFriend] = useState(false);
+    const [hideChatPage, setHideChatPage] = useState(false);
+    const [messageTab, setMessageTab] = useState(false);
 
     const states = {
         authState, setAuthState,
@@ -21,7 +23,9 @@ const ContextProvider = ({children}) => {
         friends, setFriends,
         friendOf, setFriendOf,
         openChat, setOpenChat,
-        messageFriend, setMessageFriend
+        messageFriend, setMessageFriend,
+        hideChatPage, setHideChatPage,
+        messageTab, setMessageTab
     }
 
     return (

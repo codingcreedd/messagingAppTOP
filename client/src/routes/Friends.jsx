@@ -61,28 +61,28 @@ export default function Friends() {
     }
 
     return (
-        <div className="min-h-screen w-[82%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-8">
+        <div className="min-h-screen w-[82%] max-md:w-full bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-8">
           {
             loading && <Loader />
           }
           <div className="mx-auto">
-            <h1 className="text-4xl font-bold mb-8 text-center text-white">
+            <h1 className="text-4xl font-bold mb-8 max-md:mb-4 text-center text-white max-md:text-2xl">
               Your Friends
             </h1>
     
-            <form onSubmit={handleAddFriend} className="mb-12 bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-6 rounded-2xl shadow-lg max-w-[50%] mx-auto">
-              <div className="flex items-center space-x-4">
+            <form onSubmit={handleAddFriend} className="mb-12 bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-6 rounded-2xl shadow-lg md:max-w-[50%] max-md:w-full mx-auto">
+              <div className="flex items-center space-x-4 max-md:flex-col max-md:gap-5">
                 <input
                   type="email"
                   value={newFriendEmail}
                   onChange={(e) => setNewFriendEmail(e.target.value)}
                   placeholder="Enter contact's email"
-                  className="flex-grow px-4 py-2 bg-[#0f1923] border border-[#3a7bd5] rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
+                  className="flex-grow px-4 py-2 max-md:text-sm max-md:rounded-lg bg-[#0f1923] border border-[#3a7bd5] rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
                   required
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300 transform hover:scale-105"
+                  className="px-6 py-2 max-md:px-4 max-md:py-1 max-md:rounded-lg bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300 transform hover:scale-105"
                 >
                   Add Contact
                 </button>
@@ -90,20 +90,22 @@ export default function Friends() {
             </form>
     
             {/* Friends List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-md:gap-4">
               {friends.map((friend, index) => (
                 <div
                   key={friend.id}
-                  className="relative bg-gradient-to-br from-[#1a2a3a] to-[#0f1923] rounded-2xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300"
+                  className="bg-gradient-to-br from-[#1a2a3a] to-[#0f1923] rounded-2xl p-6 shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
 
-                  {
-                    messageFriend && selectedIndex === index ? (
-                      <ChatFriendList friend_id={friend?.id} onClick_={cancelMessageFriend}/>
-                    ) : (
-                      null
-                    )
-                  }
+                  <div className='absolute top-0 right-0 left-0 z-40'>
+                    {
+                      messageFriend && selectedIndex === index ? (
+                        <ChatFriendList friend_id={friend?.id} onClick_={cancelMessageFriend} />
+                      ) : (
+                        null
+                      )
+                    }
+                  </div>
                   
                   <div className="flex items-center space-x-4 mb-4">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-[#3a7bd5] to-[#00d2ff]">
@@ -114,14 +116,14 @@ export default function Friends() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-2xl font-bold">
+                        <div className="w-full h-full flex items-center justify-center text-2xl max-md:text-xl font-bold">
                           {friend.displayName.charAt(0)}
                         </div>
                       )}
                       <div className={`absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white ${friend.isFriend ? 'bg-green-400' : 'bg-gray-400'}`}></div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold">{friend.displayName}</h2>
+                      <h2 className="text-xl max-md:text-lg font-semibold">{friend.displayName}</h2>
                       <p className="text-sm text-gray-300">{friend.email}</p>
                     </div>
                   </div>
@@ -129,7 +131,7 @@ export default function Friends() {
                     <span className={`text-sm ${friend.isFriend ? 'text-green-400' : 'text-gray-400'}`}>
                       {friendOf?.includes(friend.email) ? 'Friends' : 'Contact'}
                     </span>
-                    <button onClick={() => {setMessageFriend(true); setSelectedIndex(index)}} className="px-4 py-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300">
+                    <button onClick={() => {setMessageFriend(true); setSelectedIndex(index)}} className="px-4 py-2 max-md:px-3 max-md:py-1 max-md:rounded-lg bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300">
                       Message
                     </button>
                   </div>
