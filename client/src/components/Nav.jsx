@@ -20,7 +20,7 @@ const Nav = () => {
                 <Link to={`/${userId}/profile`} className='px-5 rounded-xl max-md:rounded-lg text-white py-2 bg-gradient-to-r from-sky-600 to-sky-800 max-md:text-sm max-md:py-1 max-md:px-3'>Profile</Link>
             </div>
 
-            <div className='flex md:flex-col gap-5 text-white'>
+            <div className='flex md:flex-col gap-5 text-white mt-10'>
                 {
                     navHeaders.map((header, index) => (
                         <div 
