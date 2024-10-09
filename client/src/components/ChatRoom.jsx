@@ -234,11 +234,11 @@ const ChatRoom = () => {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
           required
-          className="flex-grow px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-[#0f1923] border border-[#3a7bd5] rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
+          className="flex-grow px-4 w-[80%] py-2 max-md:px-2 max-md:rounded-lg max-md:py-1 max-md:text-sm bg-[#0f1923] border border-[#3a7bd5] rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
         />
         <button
           type="submit"
-          className="px-6 py-2 max-md:px-3 max-md:py-1 max-md:rounded-lg bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300 transform hover:scale-105"
+          className="px-6 py-2 max-md:px-3 max-md:py-1 ml-auto max-md:rounded-lg bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300 transform hover:scale-105"
         >
           Send
         </button>
