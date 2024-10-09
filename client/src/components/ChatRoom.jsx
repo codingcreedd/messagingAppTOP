@@ -159,13 +159,13 @@ const ChatRoom = () => {
   }
 
   return (
-    <div className={`${!hideChatPage && 'max-md:hidden'} max-md:w-full w-[75%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-4 max-md:p-2 flex flex-col`}>
+    <div className={`${!hideChatPage && 'max-md:hidden'} max-md:w-full w-[75%] bg-gradient-to-br from-[#0f1923] to-[#1c2831] text-white p-4 max-md:p-2 flex flex-col overflow-y-scroll overflow-x-hidden`}>
       {
         loadingChatRoom && <Loader description={`Loading Chat`} />
       }
       {displayAddFriends && <FriendList user_id={userId} />}
 
-      <div className="bg-gradient-to-r from-[#1a2a3a] to-[#0f1923] p-4 max-md:p-2 rounded-t-2xl flex items-center space-x-4">
+      <div className="bg-gradient-to-r overflow-y-scroll overflow-x-hidden from-[#1a2a3a] to-[#0f1923] p-4 max-md:p-2 rounded-t-2xl flex items-center space-x-4">
         <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#3a7bd5] to-[#00d2ff] flex items-center justify-center text-2xl max-md:text-lg font-bold">
           {chat?.chatContent?.name?.charAt(0)}{chat?.chatContent?.name?.charAt(1)}
         </div>
@@ -227,18 +227,18 @@ const ChatRoom = () => {
       </div>
 
       {/* Message Input */}
-      <form onSubmit={handleSendMessage} className="mt-4 flex space-x-2">
+      <form onSubmit={handleSendMessage} className="mt-4 flex md:space-x-2">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="Type a message..."
           required
-          className="flex-grow px-4 py-2 bg-[#0f1923] border border-[#3a7bd5] rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
+          className="flex-grow px-4 py-2 max-md:px-2 max-md:py-1 max-md:text-sm bg-[#0f1923] border border-[#3a7bd5] rounded-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d2ff] transition-all duration-300"
         />
         <button
           type="submit"
-          className="px-6 py-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300 transform hover:scale-105"
+          className="px-6 py-2 max-md:px-3 max-md:py-1 max-md:rounded-lg bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-full text-sm font-medium hover:from-[#00d2ff] hover:to-[#3a7bd5] transition-all duration-300 transform hover:scale-105"
         >
           Send
         </button>
